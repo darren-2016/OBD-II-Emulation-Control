@@ -65,6 +65,55 @@ class OBDEmulator:
     out = self.serialPort.readline()
     print '<<' + out
 
+  ##############################
+  # setEngineRPM
+  # PID: 010C
+  # rpm : rpm
+  def setEngineRPM(self, rpm):
+      self.sendCommand("ATSET 010C=" + str(rpm))
+
+  ##############################
+  # setVehicleSpeed
+  # PID: 010D
+  # speed : km/h
+  def setVehicleSpeed(self, speed):
+    self.sendCommand("ATSET 010D=" + str(speed))
+
+  ##############################
+  # setThrottlePosition
+  # PID: 0111
+  # throttle : 0 - 100%
+  def setThrottlePosition(self, throttle):
+    self.sendCommand("ATSET 0111=" + str(throttle))
+  
+  ##############################
+  # setFuelLevelInput
+  # PID: 012F
+  # fuelLevel : 0 - 100%
+  def setFuelLevelInput(self, fuelLevel):
+    self.sendCommand("ATSET 012F=" + str(fuelLevel))
+  
+  ##############################
+  # setEngineFuelRate
+  # PID: 015E
+  # rate: L/h
+  def setEngineFuelRate(self, rate):
+    self.sendCommand("ATSET 015E=" + str(rate))
+  
+  ##############################
+  # setMAFAirFlowRate
+  # PID: 0110
+  # rate : g/s
+  def setMAFAirFlowRate(self, rate):
+    self.sendCommand("ATSET 0110=" + str(rate))
+
+  ##############################
+  # setCalculatedEngineLoad
+  # PID: 0104
+  # rate : %
+  def setCalculatedEngineLoad(self, load):
+    self.sendCommand("ATSET 0104=" + str(load))
+
 
 def main():
   obd = OBDEmulator()
@@ -77,7 +126,15 @@ def main():
 
   obd.sendCommand("ATVIN0")
 
-  obd.sendCommand("ATSET 010C=1800")
+  obd.setEngineRPM(1600)
+  obd.setVehicleSpeed(50)
+  obd.setThrottlePosition(19)
+  obd.setFuelLevelInput(66)
+  obd.setEngineFuelRate(111)
+  obd.setMAFAirFlowRate(99)
+  obd.setCalculatedEngineLoad(48)
+
+  #obd.sendCommand("ATSET 010C=1800")
 
  
 if __name__ == "__main__":
