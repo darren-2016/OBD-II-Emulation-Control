@@ -55,16 +55,16 @@ class OBDEmulator:
     self.serialPort.write((command + '\r'))
     out = self.serialPort.readline()
     print '<<' + out
-    out = self.serialPort.readline()
-    print '<<' + out
-    out = self.serialPort.readline()
-    print '<<' + out
-    out = self.serialPort.readline()
-    print '<<' + out
-    out = self.serialPort.readline()
-    print '<<' + out
-    out = self.serialPort.readline()
-    print '<<' + out
+    #out = self.serialPort.readline()
+    #print '<<' + out
+    #out = self.serialPort.readline()
+    #print '<<' + out
+    #out = self.serialPort.readline()
+    #print '<<' + out
+    #out = self.serialPort.readline()
+    #print '<<' + out
+    #out = self.serialPort.readline()
+    #print '<<' + out
 
   ########################################
   # Function:    setEngineRPM
