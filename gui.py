@@ -86,9 +86,11 @@ class Application(Frame):
 
     def connectDevice(self):
         self.device.connectDevice()
+        self.lblStatus["text"] = "Status: Connected"
     
     def closeDevice(self):
         self.device.closeConnection()
+        self.lblStatus["text"] = "Status: Disconnected"
 
 
     def cmdIncreaseEngineRPM(self):
@@ -232,19 +234,31 @@ class Application(Frame):
 
     
     def createWidgets(self):
-        self.paramControl(self.ID_ENGINERPM,            "EngineRPM",              self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,            2, 1)
-        self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,         3, 1)        
-        self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,     4, 1)
-        self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseFuelLevelInput,       self.cmdIncreaseFuelLevelInput,       5, 1)
-        self.paramControl(self.ID_ENGINEFUELRATE,       "Engine Fuel Rate",       self.cmdSetEngineFuelRate,       self.cmdDecreaseEngineFuelRate,       self.cmdIncreaseEngineFuelRate,       6, 1)
-        self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,       7, 1)
-        self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 8, 1)
+        self.paramControl(self.ID_ENGINERPM,            "EngineRPM",              self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             4, 1)
+        self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,          5, 1)        
+        self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,      6, 1)
+        self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseFuelLevelInput,       self.cmdIncreaseFuelLevelInput,        7, 1)
+        self.paramControl(self.ID_ENGINEFUELRATE,       "Engine Fuel Rate",       self.cmdSetEngineFuelRate,       self.cmdDecreaseEngineFuelRate,       self.cmdIncreaseEngineFuelRate,        8, 1)
+        self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        9, 1)
+        self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 10, 1)
         
+        self.lblVIN = Label(self)
+        self.lblVIN["text"] = "VIN"
+        self.lblVIN.grid(sticky="W", row=3, column=1)
+        self.entVIN = Entry(self) #, validate="focusout", validatecommand=cmdVIN)
+        self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=2)
+        self.btnVIN = Button(self)
+        self.btnVIN["text"] = "Apply"
+        self.btnVIN["fg"]   = "red"
+        #self.btnVIN["command"] =  self.quit
+        self.btnVIN.grid(row=3,column=4)
+        
+
         self.btnQuit = Button(self)
         self.btnQuit["text"] = "QUIT"
         self.btnQuit["fg"]   = "red"
         self.btnQuit["command"] =  self.quit
-        self.btnQuit.grid(row=1,column=3)
+        self.btnQuit.grid(row=1,column=5)
 
         self.btnConnectDevice = Button(self)
         self.btnConnectDevice["text"] = "Connect Device"
@@ -252,10 +266,35 @@ class Application(Frame):
         self.btnConnectDevice.grid(row=1, column=1)
 
         self.btnClose = Button(self)
-        self.btnClose["text"] = "Close"
+        self.btnClose["text"] = "Disconnect Device"
         self.btnClose["fg"]   = "red"
         self.btnClose["command"] =  self.closeDevice
         self.btnClose.grid(row=1, column=2)
+
+        self.lblStatus = Label(self)
+        self.lblStatus["text"] = "Status: Disconnected"
+        self.lblStatus.grid(sticky="W", row=2, column=1)
+
+        self.lblPID = Label(self)
+        self.lblPID["text"] = "PID"
+        self.lblPID.grid(sticky="W", row=11, column=1)
+        self.entPID = Entry(self)
+        self.entPID.grid(sticky="WE", row=11, column=2)
+        self.btnPIDValueDec = Button(self)
+        self.btnPIDValueDec["text"] = "-"
+        self.btnPIDValueDec["fg"]   = "red"
+        self.btnPIDValueDec.grid(row=11,column=3)
+        self.entPIDValue = Entry(self)
+        self.entPIDValue.grid(sticky="WE", row=11, column=4)
+        self.btnPIDValueInc = Button(self)
+        self.btnPIDValueInc["text"] = "+"
+        self.btnPIDValueInc["fg"]   = "red"
+        self.btnPIDValueInc.grid(row=11,column=5)
+        self.btnPIDValueApply = Button(self)
+        self.btnPIDValueApply["text"] = "Apply"
+        self.btnPIDValueApply["fg"]   = "red"
+        self.btnPIDValueApply.grid(row=11,column=6)
+
 
 
     def __init__(self, master=None):
