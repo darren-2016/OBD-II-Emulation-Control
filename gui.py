@@ -55,27 +55,28 @@ class Application(Frame):
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
 
-        # Parameter Entry
-        self.ent[index] = Entry(self, validate="focusout", validatecommand=callback)
-        self.ent[index].grid(sticky="W", row=row, column=column+2)
-
-        # Parameter Setting Apply Button
-        self.btnSet[index] = Button(self)
-        self.btnSet[index]["text"] = "Apply"
-        self.btnSet[index]["command"] = callback
-        self.btnSet[index].grid(sticky="W", row=row, column=column+4)
-    
         # Parameter Decrement Button
         self.btnDec[index] = Button(self)
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
-        self.btnDec[index].grid(sticky="W", row=row, column=column+1)
+        self.btnDec[index].grid(sticky="E", row=row, column=column+2)
+
+        # Parameter Entry
+        self.ent[index] = Entry(self, validate="focusout", validatecommand=callback)
+        self.ent[index].grid(sticky="WE", row=row, column=column+3, columnspan=2)
         
         # Parameter Increment Button
         self.btnInc[index] = Button(self)
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
-        self.btnInc[index].grid(sticky="W", row=row, column=column+3)
+        self.btnInc[index].grid(sticky="W", row=row, column=column+5)
+
+        # Parameter Setting Apply Button
+        self.btnSet[index] = Button(self)
+        self.btnSet[index]["text"] = "Apply"
+        self.btnSet[index]["command"] = callback
+        self.btnSet[index].grid(sticky="W", row=row, column=column+6)
+    
 
 
     def initialiseParams(self):
@@ -222,6 +223,29 @@ class Application(Frame):
             self.ent[self.ID_CALCULATEDENGINELOAD].insert(0, load)
         self.device.setCalculatedEngineLoad(load)
 
+    def cmdIncByPID(self):
+        self.cmdSetByPID(self.INC)
+
+    def cmdDecByPID(self):
+        self.cmdSetByPID(self.DEC)
+
+    def cmdSetByPID(self, mode=SET):
+        pid = self.entPID.get()
+        pidValue = int(self.entPIDValue.get(), base=10)
+        if mode == self.INC:
+            pidValue = pidValue + 1
+            self.entPIDValue.delete(0, END)
+            self.entPIDValue.insert(0, pidValue)
+        if mode == self.DEC:
+            pidValue = pidValue - 1
+            self.entPIDValue.delete(0, END)
+            self.entPIDValue.insert(0, pidValue)
+    
+        ###pid = self.entPID.get()
+        ###pidValue = self.entPIDValue.get()
+        print "PID = " + pid
+        print "PID Value= " + str(pidValue)
+
 
     def cmdTest(self):
         print "test"
@@ -246,12 +270,12 @@ class Application(Frame):
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=3, column=1)
         self.entVIN = Entry(self) #, validate="focusout", validatecommand=cmdVIN)
-        self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=2)
+        self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=4)
         self.btnVIN = Button(self)
         self.btnVIN["text"] = "Apply"
         self.btnVIN["fg"]   = "red"
         #self.btnVIN["command"] =  self.quit
-        self.btnVIN.grid(row=3,column=4)
+        self.btnVIN.grid(row=3,column=7)
         
 
         self.btnQuit = Button(self)
@@ -283,17 +307,20 @@ class Application(Frame):
         self.btnPIDValueDec = Button(self)
         self.btnPIDValueDec["text"] = "-"
         self.btnPIDValueDec["fg"]   = "red"
-        self.btnPIDValueDec.grid(row=11,column=3)
+        self.btnPIDValueDec["command"] = self.cmdDecByPID
+        self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
         self.entPIDValue = Entry(self)
-        self.entPIDValue.grid(sticky="WE", row=11, column=4)
+        self.entPIDValue.grid(sticky="WE", row=11, column=4, columnspan=2)
         self.btnPIDValueInc = Button(self)
         self.btnPIDValueInc["text"] = "+"
         self.btnPIDValueInc["fg"]   = "red"
-        self.btnPIDValueInc.grid(row=11,column=5)
+        self.btnPIDValueInc["command"] = self.cmdIncByPID
+        self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
         self.btnPIDValueApply = Button(self)
         self.btnPIDValueApply["text"] = "Apply"
         self.btnPIDValueApply["fg"]   = "red"
-        self.btnPIDValueApply.grid(row=11,column=6)
+        self.btnPIDValueApply["command"] = self.cmdSetByPID
+        self.btnPIDValueApply.grid(row=11,column=7)
 
 
 

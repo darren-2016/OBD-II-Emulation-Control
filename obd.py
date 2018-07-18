@@ -67,6 +67,15 @@ class OBDEmulator:
     #print '<<' + out
 
   ########################################
+  # Function:    setPidValue
+  # Parameters:  pid (string), pidValue (integer)
+  # Description: Set PID Value
+  def setPidValue(self, pid, pidValue):
+    print "PID = " + pid
+    print "PID Value = " + str(pidValue)
+
+  
+  ########################################
   # Function:    setEngineRPM
   # Parameters:  rpm (rpm)
   # Description: PID=010C
