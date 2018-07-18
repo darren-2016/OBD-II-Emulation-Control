@@ -14,6 +14,7 @@ import obd
 print "GUI"
 
 bgcolour = 'lightblue'
+title = 'OBD-II Emulator Control'
 
         
 
@@ -352,17 +353,44 @@ class Application(Frame):
         self.createWidgets()
         self.initialiseParams()
 
+
+
 def ask_quit():
     if tkMessageBox.askokcancel("Quit", "You want to quit now?"):
         root.destroy()
 
+def popup_about():
+    win = Toplevel()
+    win.wm_title("About...")
+
+    l = Label(win, text=title)
+    l.grid(row=0, column=0)
+
+    l = Label(win, text="Version 0.0.1")
+    l.grid(row=1, column=0)
+
+    b = Button(win, text="OK", command=win.destroy)
+    b.grid(row=2, column=0)
+
+
 root = Tk()
 appVersion = "0.0.1"
-root.wm_title('OBD-II Emulator Control ' + appVersion)
+root.wm_title(title + ' ' + appVersion)
+menubar = Menu(root)
+filemenu = Menu(menubar, tearoff=0)
+#self.menubar.add_command(label="Hello!", command=hello)
+filemenu.add_command(label="About", command=popup_about)
+filemenu.add_command(label="Quit!", command=ask_quit)
+menubar.add_cascade(label="File", menu=filemenu)
+root.config(menu=menubar)
 root.configure(background=bgcolour)
+
+
 root.protocol("WM_DELETE_WINDOW", ask_quit)
 app = Application(master=root)
 app.configure(background=bgcolour)
-root.mainloop() #app.mainloop()
+
+root.mainloop()
+
 
 
