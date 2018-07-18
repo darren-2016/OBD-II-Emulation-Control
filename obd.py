@@ -70,7 +70,8 @@ class OBDEmulator:
   # Function:    setPidValue
   # Parameters:  pid (string), pidValue (integer)
   # Description: Set PID Value
-  def setPidValue(self, pid, pidValue):
+  def setPIDValue(self, pid, pidValue):
+    self.sendCommand("ATSET " + pid + "=" + str(pidValue))
     print "PID = " + pid
     print "PID Value = " + str(pidValue)
 
