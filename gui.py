@@ -54,29 +54,34 @@ class Application(Frame):
         self.lbl[index] = Label(self)
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
+        self.lbl[index].configure(background='blue')
 
         # Parameter Decrement Button
         self.btnDec[index] = Button(self)
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
         self.btnDec[index].grid(sticky="E", row=row, column=column+2)
+        self.btnDec[index].configure(highlightbackground='blue')
 
         # Parameter Entry
         self.ent[index] = Entry(self, validate="focusout", validatecommand=callback)
         self.ent[index].grid(sticky="WE", row=row, column=column+3, columnspan=2)
+        self.ent[index].configure(highlightbackground='blue')
         
         # Parameter Increment Button
         self.btnInc[index] = Button(self)
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
         self.btnInc[index].grid(sticky="W", row=row, column=column+5)
+        self.btnInc[index].configure(highlightbackground='blue')
 
         # Parameter Setting Apply Button
         self.btnSet[index] = Button(self)
         self.btnSet[index]["text"] = "Apply"
         self.btnSet[index]["command"] = callback
         self.btnSet[index].grid(sticky="W", row=row, column=column+6)
-    
+        self.btnSet[index].configure(highlightbackground='blue')
+
 
 
     def initialiseParams(self):
@@ -240,6 +245,8 @@ class Application(Frame):
             pidValue = pidValue - 1
             self.entPIDValue.delete(0, END)
             self.entPIDValue.insert(0, pidValue)
+
+        self.device.setPIDValue(pid, pidValue)
     
         ###pid = self.entPID.get()
         ###pidValue = self.entPIDValue.get()
@@ -269,13 +276,17 @@ class Application(Frame):
         self.lblVIN = Label(self)
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=3, column=1)
+        self.lblVIN.configure(highlightbackground='blue')
+        self.lblVIN.configure(background='blue')
         self.entVIN = Entry(self) #, validate="focusout", validatecommand=cmdVIN)
         self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=4)
+        self.entVIN.configure(highlightbackground='blue')
         self.btnVIN = Button(self)
         self.btnVIN["text"] = "Apply"
         self.btnVIN["fg"]   = "red"
         #self.btnVIN["command"] =  self.quit
         self.btnVIN.grid(row=3,column=7)
+        self.btnVIN.configure(highlightbackground='blue')
         
 
         self.btnQuit = Button(self)
@@ -283,44 +294,56 @@ class Application(Frame):
         self.btnQuit["fg"]   = "red"
         self.btnQuit["command"] =  self.quit
         self.btnQuit.grid(row=1,column=5)
+        self.btnQuit.configure(highlightbackground='blue')
 
         self.btnConnectDevice = Button(self)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
         self.btnConnectDevice.grid(row=1, column=1)
+        self.btnConnectDevice.configure(highlightbackground='blue')
 
         self.btnClose = Button(self)
         self.btnClose["text"] = "Disconnect Device"
         self.btnClose["fg"]   = "red"
         self.btnClose["command"] =  self.closeDevice
         self.btnClose.grid(row=1, column=2)
+        self.btnClose.configure(highlightbackground='blue')
 
         self.lblStatus = Label(self)
         self.lblStatus["text"] = "Status: Disconnected"
         self.lblStatus.grid(sticky="W", row=2, column=1)
+        self.lblStatus.configure(highlightbackground='blue')
+        self.lblStatus.configure(background='blue')
 
         self.lblPID = Label(self)
         self.lblPID["text"] = "PID"
         self.lblPID.grid(sticky="W", row=11, column=1)
+        self.lblPID.configure(highlightbackground='blue')
+        self.lblPID.configure(background='blue')
         self.entPID = Entry(self)
         self.entPID.grid(sticky="WE", row=11, column=2)
+        self.entPID.configure(highlightbackground='blue')
         self.btnPIDValueDec = Button(self)
         self.btnPIDValueDec["text"] = "-"
         self.btnPIDValueDec["fg"]   = "red"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
+        self.btnPIDValueDec.configure(highlightbackground='blue')
         self.entPIDValue = Entry(self)
         self.entPIDValue.grid(sticky="WE", row=11, column=4, columnspan=2)
+        self.entPIDValue.configure(highlightbackground='blue')
         self.btnPIDValueInc = Button(self)
         self.btnPIDValueInc["text"] = "+"
         self.btnPIDValueInc["fg"]   = "red"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
         self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
+        self.btnPIDValueInc.configure(highlightbackground='blue')
         self.btnPIDValueApply = Button(self)
         self.btnPIDValueApply["text"] = "Apply"
         self.btnPIDValueApply["fg"]   = "red"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=11,column=7)
+        self.btnPIDValueApply.configure(highlightbackground='blue')
 
 
 
@@ -335,7 +358,9 @@ class Application(Frame):
 root = Tk()
 appVersion = "0.0.1"
 root.wm_title('OBD-II Emulator Control ' + appVersion)
+root.configure(background='blue')
 app = Application(master=root)
+app.configure(background='blue')
 #root.configure(background='blue')
 #app.configure(background='blue')
 app.mainloop()
