@@ -39,6 +39,11 @@ class Application(Frame):
     paramValue[ID_MAFAIRFLOWRATE] = 0
     paramValue[ID_CALCULATEDENGINELOAD] = 0
 
+    SET = 1
+    INC = 2
+    DEC = 3
+
+
     
     def paramControl(self, index, label, callback, callbackDecParameter, callbackIncParameter, row, column):
         print "Label = " + label
@@ -87,47 +92,133 @@ class Application(Frame):
 
 
     def cmdIncreaseEngineRPM(self):
-        rpm = int(self.ent[self.ID_ENGINERPM].get(), base=10)
-        rpm = rpm + 1
-        self.device.setEngineRPM(rpm)
-        self.ent[self.ID_ENGINERPM].delete(0, END)
-        self.ent[self.ID_ENGINERPM].insert(0, rpm)
+        self.cmdSetEngineRPM(self.INC)
 
     def cmdDecreaseEngineRPM(self):
+        self.cmdSetEngineRPM(self.DEC)
+
+    def cmdSetEngineRPM(self, mode=SET):
         rpm = int(self.ent[self.ID_ENGINERPM].get(), base=10)
-        rpm = rpm - 1
-        self.device.setEngineRPM(rpm)
-        self.ent[self.ID_ENGINERPM].delete(0, END)
-        self.ent[self.ID_ENGINERPM].insert(0, rpm)
+        if mode == self.SET:
+            self.device.setEngineRPM(rpm)
+        if mode == self.INC:
+            rpm = rpm + 1
+            self.device.setEngineRPM(rpm)
+            self.ent[self.ID_ENGINERPM].delete(0, END)
+            self.ent[self.ID_ENGINERPM].insert(0, rpm)
+        if mode == self.DEC:
+            rpm = rpm - 1
+            self.device.setEngineRPM(rpm)
+            self.ent[self.ID_ENGINERPM].delete(0, END)
+            self.ent[self.ID_ENGINERPM].insert(0, rpm)
 
-    def cmdSetEngineRPM(self):
-        rpm = self.ent[self.ID_ENGINERPM].get()
-        self.device.setEngineRPM(int(rpm, base=10))
+    def cmdIncreaseVehicleSpeed(self):
+        self.cmdSetVehicleSpeed(self.INC)
 
+    def cmdDecreaseVehicleSpeed(self):
+        self.cmdSetVehicleSpeed(self.DEC)
 
-    def cmdSetVehicleSpeed(self):
-        speed = self.ent[self.ID_VEHICLESPEED].get()
-        self.device.setVehicleSpeed(int(speed, 10))
+    def cmdSetVehicleSpeed(self, mode=SET):
+        speed = int(self.ent[self.ID_VEHICLESPEED].get(), base=10)
+        if mode == self.INC:
+            speed = speed + 1
+            self.ent[self.ID_VEHICLESPEED].delete(0, END)
+            self.ent[self.ID_VEHICLESPEED].insert(0, speed)
+        if mode == self.DEC:
+            speed = speed - 1
+            self.ent[self.ID_VEHICLESPEED].delete(0, END)
+            self.ent[self.ID_VEHICLESPEED].insert(0, speed)
+        self.device.setVehicleSpeed(speed)
 
-    def cmdSetThrottlePosition(self):
-        throttle = self.ent[self.ID_THROTTLEPOSITION].get()
-        self.device.setThrottlePosition(int(throttle, 10))
+    def cmdIncreaseThrottlePosition(self):
+        self.cmdSetThrottlePosition(self.INC)
+
+    def cmdDecreaseThrottlePosition(self):
+        self.cmdSetThrottlePosition(self.DEC)
+
+    def cmdSetThrottlePosition(self, mode=SET):
+        throttle = int(self.ent[self.ID_THROTTLEPOSITION].get(), base=10)
+        if mode == self.INC:
+            throttle = throttle + 1
+            self.ent[self.ID_THROTTLEPOSITION].delete(0, END)
+            self.ent[self.ID_THROTTLEPOSITION].insert(0, throttle)
+        if mode == self.DEC:
+            throttle = throttle - 1
+            self.ent[self.ID_THROTTLEPOSITION].delete(0, END)
+            self.ent[self.ID_THROTTLEPOSITION].insert(0, throttle)
+        self.device.setThrottlePosition(throttle)
     
-    def cmdSetFuelLevelInput(self):
-        level = self.ent[self.ID_FUELLEVELINPUT].get()
-        self.device.setFuelLevelInput(int(level, 10))
+    def cmdIncreaseFuelLevelInput(self):
+        self.cmdSetFuelLevelInput(self.INC)
+
+    def cmdDecreaseFuelLevelInput(self):
+        self.cmdSetFuelLevelInput(self.DEC)
+
+    def cmdSetFuelLevelInput(self, mode=SET):
+        level = int(self.ent[self.ID_FUELLEVELINPUT].get(), base=10)
+        if mode == self.INC:
+            level = level + 1
+            self.ent[self.ID_FUELLEVELINPUT].delete(0, END)
+            self.ent[self.ID_FUELLEVELINPUT].insert(0, level)
+        if mode == self.DEC:
+            level = level - 1
+            self.ent[self.ID_FUELLEVELINPUT].delete(0, END)
+            self.ent[self.ID_FUELLEVELINPUT].insert(0, level)
+        self.device.setFuelLevelInput(level)
     
-    def cmdSetEngineFuelRate(self):
-        rate = self.ent[self.ID_ENGINEFUELRATE].get()
-        self.device.setEngineFuelRate(int(rate, 10))
+    def cmdIncreaseEngineFuelRate(self):
+        self.cmdSetEngineFuelRate(self.INC)
+
+    def cmdDecreaseEngineFuelRate(self):
+        self.cmdSetEngineFuelRate(self.DEC)
+
+    def cmdSetEngineFuelRate(self, mode=SET):
+        rate = int(self.ent[self.ID_ENGINEFUELRATE].get(), base=10)
+        if mode == self.INC:
+            rate = rate + 1
+            self.ent[self.ID_ENGINEFUELRATE].delete(0, END)
+            self.ent[self.ID_ENGINEFUELRATE].insert(0, rate)
+        if mode == self.DEC:
+            rate = rate - 1
+            self.ent[self.ID_ENGINEFUELRATE].delete(0, END)
+            self.ent[self.ID_ENGINEFUELRATE].insert(0, rate)
+        self.device.setEngineFuelRate(rate)
+
+    def cmdIncreaseMAFAirFlowRate(self):
+        self.cmdSetMAFAirFlowRate(self.INC)
+
+    def cmdDecreaseMAFAirFlowRate(self):
+        self.cmdSetMAFAirFlowRate(self.DEC)
+
+    def cmdSetMAFAirFlowRate(self, mode=SET):
+        rate = int(self.ent[self.ID_MAFAIRFLOWRATE].get(),base=10)
+        if mode == self.INC:
+            rate = rate + 1
+            self.ent[self.ID_MAFAIRFLOWRATE].delete(0, END)
+            self.ent[self.ID_MAFAIRFLOWRATE].insert(0, rate)
+        if mode == self.DEC:
+            rate = rate - 1
+            self.ent[self.ID_MAFAIRFLOWRATE].delete(0, END)
+            self.ent[self.ID_MAFAIRFLOWRATE].insert(0, rate)
+        self.device.setMAFAirFlowRate(rate)
     
-    def cmdSetMAFAirFlowRate(self):
-        rate = self.ent[self.ID_MAFAIRFLOWRATE].get()
-        self.device.setMAFAirFlowRate(int(rate, 10))
-    
-    def cmdSetCalculatedEngineLoad(self):
-        load = self.ent[self.ID_CALCULATEDENGINELOAD].get()
-        self.device.setCalculatedEngineLoad(int(load, 10))
+    def cmdIncreaseCalculatedEngineLoad(self):
+        self.cmdSetCalculatedEngineLoad(self.INC)
+
+    def cmdDecreaseCalculatedEngineLoad(self):
+        self.cmdSetCalculatedEngineLoad(self.DEC)
+
+    def cmdSetCalculatedEngineLoad(self, mode=SET):
+        load = int(self.ent[self.ID_CALCULATEDENGINELOAD].get(), base=10)
+        if mode == self.INC:
+            load = load + 1
+            self.ent[self.ID_CALCULATEDENGINELOAD].delete(0, END)
+            self.ent[self.ID_CALCULATEDENGINELOAD].insert(0, load)
+        if mode == self.DEC:
+            load = load - 1
+            self.ent[self.ID_CALCULATEDENGINELOAD].delete(0, END)
+            self.ent[self.ID_CALCULATEDENGINELOAD].insert(0, load)
+        self.device.setCalculatedEngineLoad(load)
 
 
     def cmdTest(self):
@@ -141,13 +232,13 @@ class Application(Frame):
 
     
     def createWidgets(self):
-        self.paramControl(self.ID_ENGINERPM,            "EngineRPM",              self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,       self.cmdIncreaseEngineRPM,       2, 1)
-        self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdSetVehicleSpeed,         self.cmdSetVehicleSpeed,         3, 1)        
-        self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseEngineRPM,       self.cmdIncreaseEngineRPM,       4, 1)
-        self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseEngineRPM,       self.cmdIncreaseEngineRPM,       5, 1)
-        self.paramControl(self.ID_ENGINEFUELRATE,       "Engine Fuel Rate",       self.cmdSetEngineFuelRate,       self.cmdSetEngineFuelRate,       self.cmdSetEngineFuelRate,       6, 1)
-        self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdSetMAFAirFlowRate,       self.cmdSetMAFAirFlowRate,       7, 1)
-        self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdSetCalculatedEngineLoad, self.cmdSetCalculatedEngineLoad, 8, 1)
+        self.paramControl(self.ID_ENGINERPM,            "EngineRPM",              self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,            2, 1)
+        self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,         3, 1)        
+        self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,     4, 1)
+        self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseFuelLevelInput,       self.cmdIncreaseFuelLevelInput,       5, 1)
+        self.paramControl(self.ID_ENGINEFUELRATE,       "Engine Fuel Rate",       self.cmdSetEngineFuelRate,       self.cmdDecreaseEngineFuelRate,       self.cmdIncreaseEngineFuelRate,       6, 1)
+        self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,       7, 1)
+        self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 8, 1)
         
         self.btnQuit = Button(self)
         self.btnQuit["text"] = "QUIT"
