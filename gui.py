@@ -6,6 +6,7 @@
 
 import Tkinter
 from Tkinter import *
+import tkMessageBox
 import obd
 
 #window=Tk()
@@ -260,7 +261,6 @@ class Application(Frame):
         print "test"
         obd.main()
         
-        
 
     def callback(self):
         print "Callback!"
@@ -285,7 +285,6 @@ class Application(Frame):
         self.btnVIN = Button(self)
         self.btnVIN["text"] = "Apply"
         self.btnVIN["fg"]   = "red"
-        #self.btnVIN["command"] =  self.quit
         self.btnVIN.grid(row=3,column=7)
         self.btnVIN.configure(highlightbackground=bgcolour)
         
@@ -293,7 +292,7 @@ class Application(Frame):
         self.btnQuit = Button(self)
         self.btnQuit["text"] = "QUIT"
         self.btnQuit["fg"]   = "red"
-        self.btnQuit["command"] =  self.quit
+        self.btnQuit["command"] =  ask_quit
         self.btnQuit.grid(row=1,column=5)
         self.btnQuit.configure(highlightbackground=bgcolour)
 
@@ -353,13 +352,17 @@ class Application(Frame):
         self.createWidgets()
         self.initialiseParams()
 
+def ask_quit():
+    if tkMessageBox.askokcancel("Quit", "You want to quit now?"):
+        root.destroy()
 
 root = Tk()
 appVersion = "0.0.1"
 root.wm_title('OBD-II Emulator Control ' + appVersion)
 root.configure(background=bgcolour)
+root.protocol("WM_DELETE_WINDOW", ask_quit)
 app = Application(master=root)
 app.configure(background=bgcolour)
-app.mainloop()
-root.destroy()
+root.mainloop() #app.mainloop()
+
 
