@@ -284,71 +284,58 @@ class Application(ttk.Frame):
         self.lblVIN = ttk.Label(self)
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=3, column=1)
-        #self.lblVIN.configure(highlightbackground=bgcolour, background=bgcolour)
+
         self.entVIN = ttk.Entry(self) #, validate="focusout", validatecommand=cmdVIN)
         self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=4)
-        #self.entVIN.configure(highlightbackground=bgcolour)
+
         self.btnVIN = ttk.Button(self)
         self.btnVIN["text"] = "Apply"
-        #self.btnVIN["fg"]   = "red"
-        self.btnVIN.grid(row=3,column=7)
-        #self.btnVIN.configure(highlightbackground=bgcolour)
-        
+        self.btnVIN.grid(row=3,column=7)        
 
         self.btnQuit = ttk.Button(self)
         self.btnQuit["text"] = "QUIT"
-        #self.btnQuit["foreground"]   = "red"
         self.btnQuit["command"] =  ask_quit
         self.btnQuit.grid(row=1,column=5)
-        #self.btnQuit.configure(highlightbackground=bgcolour)
 
         self.btnConnectDevice = ttk.Button(self)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
         self.btnConnectDevice.grid(row=1, column=1)
-        #self.btnConnectDevice.configure(highlightbackground=bgcolour)
 
         self.btnDisconnect = ttk.Button(self)
         self.btnDisconnect["text"] = "Disconnect Device"
-        #self.btnDisconnect["fg"]   = "red"
         self.btnDisconnect["command"] =  self.closeDevice
         self.btnDisconnect.grid(row=1, column=2)
-        #self.btnDisconnect.configure(highlightbackground=bgcolour)
 
         self.lblStatus = ttk.Label(self)
         self.lblStatus["text"] = "Status: Disconnected"
         self.lblStatus.grid(sticky="W", row=2, column=1)
-        #self.lblStatus.configure(highlightbackground=bgcolour, background=bgcolour)
 
         self.lblPID = ttk.Label(self)
         self.lblPID["text"] = "PID"
         self.lblPID.grid(sticky="W", row=11, column=1)
-        #self.lblPID.configure(highlightbackground=bgcolour, background=bgcolour)
+
         self.entPID = ttk.Entry(self)
         self.entPID.grid(sticky="WE", row=11, column=2)
-        #self.entPID.configure(highlightbackground=bgcolour)
+
         self.btnPIDValueDec = ttk.Button(self)
         self.btnPIDValueDec["text"] = "-"
-        #self.btnPIDValueDec["fg"]   = "red"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
-        #self.btnPIDValueDec.configure(highlightbackground=bgcolour)
+
         self.entPIDValue = ttk.Entry(self)
         self.entPIDValue.grid(sticky="WE", row=11, column=4, columnspan=2)
-        #self.entPIDValue.configure(highlightbackground=bgcolour)
+
         self.btnPIDValueInc = ttk.Button(self)
         self.btnPIDValueInc["text"] = "+"
-        #self.btnPIDValueInc["fg"]   = "red"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
         self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
-        #self.btnPIDValueInc.configure(highlightbackground=bgcolour)
+
         self.btnPIDValueApply = ttk.Button(self)
         self.btnPIDValueApply["text"] = "Apply"
-        #self.btnPIDValueApply["fg"]   = "red"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=11,column=7)
-        #self.btnPIDValueApply.configure(highlightbackground=bgcolour)
-
+        
 
 
     def __init__(self, master=None):
@@ -408,7 +395,6 @@ root.configure(background=bgcolour)
 
 root.protocol("WM_DELETE_WINDOW", ask_quit)
 app = Application(master=root)
-#app.configure(background=bgcolour)
 
 root.mainloop()
 
