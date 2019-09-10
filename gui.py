@@ -6,9 +6,9 @@
 
 import tkinter
 from tkinter import *
-#import tkMessageBox
-import obd
+from tkinter import messagebox
 from tkinter import ttk
+import obd
 
 #window=Tk()
 
@@ -351,8 +351,8 @@ class Application(ttk.Frame):
 # Quit confirmation popup dialog
 #
 def ask_quit():
-    #if tkMessageBox.askokcancel("Quit", "You want to quit now?"):
-    root.destroy()
+    if messagebox.askokcancel("Quit", "You want to quit now?"):
+        root.destroy()
 
 ############################################################
 # About popup dialog
