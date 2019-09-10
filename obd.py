@@ -20,14 +20,23 @@ class OBDEmulator:
   ########################################
   # scanSerialPorts
   def scanSerialPorts(self):
-    #portlist = serial.tools.list_ports
+    print ("Scanning serial ports")
+    portlist = serial.tools.list_ports
+    
     iterator = serial.tools.list_ports.grep(self.portIdString)
 
+    #for i in portlist:
+    #  print (i.ListPortInfo)
+    
     devicesFound = 0
     for c, (port, desc, hwid) in enumerate(iterator):
       devicesFound = devicesFound + 1
       portPath = format(port)
-
+    '''
+    port = '/dev/tty.SLAB_USBtoUART'
+    portPath = format(port)
+    devicesFound = 1
+    '''
     if devicesFound == 1:
       print("Found OBD-II device {}".format(portPath))
       return True, portPath
@@ -39,22 +48,25 @@ class OBDEmulator:
   # connectDevice
   def connectDevice(self):
     i, portPath = self.scanSerialPorts()
+    #i = True
+    #portPath = '/dev/tty.SLAB_USBtoUART'
     if i == True:
-      print "Connecting"
+      print ("Connecting")
       self.serialPort = serial.Serial(portPath, baudrate=self.baudRate, timeout=1)
+      print ("Connected to: " + self.serialPort.name)
 
   ########################################
   # closeConnection
   def closeConnection(self):
-    print "Disconnecting"
+    print ("Disconnecting")
     self.serialPort.close()
 
   ########################################
   # sendCommand
   def sendCommand(self, command):
-    self.serialPort.write((command + '\r'))
+    self.serialPort.write((command.encode() + b'\r'))
     out = self.serialPort.readline()
-    print '<<' + out
+    print ('<<' + out.decode())
     #out = self.serialPort.readline()
     #print '<<' + out
     #out = self.serialPort.readline()
@@ -72,8 +84,8 @@ class OBDEmulator:
   # Description: Set PID Value
   def setPIDValue(self, pid, pidValue):
     self.sendCommand("ATSET " + pid + "=" + str(pidValue))
-    print "PID = " + pid
-    print "PID Value = " + str(pidValue)
+    print ("PID = " + pid)
+    print ("PID Value = " + str(pidValue))
 
   
   ########################################
@@ -114,23 +126,23 @@ class OBDEmulator:
   def getEngineFuelRate(self):
     self.sendCommand("ATGET 015E")
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print "<<<<< " + str(out)
+    print ("<<<<< " + str(out))
     
   ########################################
   # Function:    setMAFAirFlowRate
@@ -153,7 +165,7 @@ class OBDEmulator:
 def main():
   obd = OBDEmulator()
 
-  print 'OBD-II Emulator Controller'
+  print ('OBD-II Emulator Controller')
   
   obd.connectDevice()
 

@@ -4,15 +4,15 @@
 # Module: GUI.py
 #
 
-import Tkinter
-from Tkinter import *
-import tkMessageBox
+import tkinter
+from tkinter import *
+#import tkMessageBox
 import obd
 from tkinter import ttk
 
 #window=Tk()
 
-print "GUI"
+print ("GUI")
 
 bgcolour = 'lightblue'
 title = 'OBD-II Emulator Control'
@@ -51,7 +51,7 @@ class Application(ttk.Frame):
 
     
     def paramControl(self, index, label, callback, callbackDecParameter, callbackIncParameter, row, column):
-        print "Label = " + label
+        print ("Label = " + label)
         self.label = label
         self.callback = callback
 
@@ -92,7 +92,7 @@ class Application(ttk.Frame):
     def initialiseParams(self):
         for i in range(self.ID_ENGINERPM, self.ID_CALCULATEDENGINELOAD + 1):
             self.ent[i].insert(0, self.paramValue[i])
-        print
+        print()
 
 
     def connectDevice(self):
@@ -259,17 +259,17 @@ class Application(ttk.Frame):
     
         ###pid = self.entPID.get()
         ###pidValue = self.entPIDValue.get()
-        print "PID = " + pid
-        print "PID Value= " + str(pidValue)
+        print ("PID = " + pid)
+        print ("PID Value= " + str(pidValue))
 
 
     def cmdTest(self):
-        print "test"
+        print ("test")
         obd.main()
         
 
     def callback(self):
-        print "Callback!"
+        print ("Callback!")
 
     
     def createWidgets(self):
@@ -361,8 +361,8 @@ class Application(ttk.Frame):
 
 
 def ask_quit():
-    if tkMessageBox.askokcancel("Quit", "You want to quit now?"):
-        root.destroy()
+    #if tkMessageBox.askokcancel("Quit", "You want to quit now?"):
+    root.destroy()
 
 def popup_about():
     win = Toplevel()
