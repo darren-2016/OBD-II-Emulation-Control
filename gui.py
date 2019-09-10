@@ -347,22 +347,36 @@ class Application(ttk.Frame):
 
 
 
+############################################################
+# Quit confirmation popup dialog
+#
 def ask_quit():
     #if tkMessageBox.askokcancel("Quit", "You want to quit now?"):
     root.destroy()
 
+############################################################
+# About popup dialog
+#
 def popup_about():
     win = Toplevel()
     win.wm_title("About...")
+    win.columnconfigure(0, weight=1)
+    win.rowconfigure(0, weight=1)
 
-    l = Label(win, text=title)
-    l.grid(row=0, column=0)
+    frmAbout = ttk.Frame(win)
+    frmAbout.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
+    frmAbout.grid_columnconfigure(0, weight=1)
+    frmAbout.grid_rowconfigure(0, weight=1)
 
-    l = Label(win, text="Version 0.0.1")
-    l.grid(row=1, column=0)
+    
+    l = ttk.Label(frmAbout, text=title, anchor=CENTER)
+    l.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
 
-    b = Button(win, text="OK", command=win.destroy)
-    b.grid(row=2, column=0)
+    l = ttk.Label(frmAbout, text="Version 0.0.1", anchor=CENTER)
+    l.grid(row=1, column=0, columnspan=1, sticky=N+S+E+W)
+
+    b = ttk.Button(frmAbout, text="OK", command=win.destroy)
+    b.grid(row=2, column=0, columnspan=1, sticky=N+S+E+W)
 
 
 
@@ -371,12 +385,14 @@ root = Tk()
 s = ttk.Style()
 root.style = ttk.Style()
 #print (s.theme_names())
-#s.theme_use('clam')
+root.style.theme_use('clam')
 #root.style.theme_use('clam')
 #root.style.configure('TButton', background='grey')
 #root.style.configure('TButton', foreground='black')
 #root.style.configure('TButton', highlightcolor='red')
 root.style.map('TButton', background=[('disabled','#d9d9d9'), ('active','#ececec')], foreground=[('disabled','#a3a3a3')], relief=[('pressed', '!disabled', 'sunken')])
+
+root.style.configure('TFrame', background='grey')
 
 
 
