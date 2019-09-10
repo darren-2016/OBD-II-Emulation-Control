@@ -8,6 +8,7 @@ import Tkinter
 from Tkinter import *
 import tkMessageBox
 import obd
+from tkinter import ttk
 
 #window=Tk()
 
@@ -18,7 +19,7 @@ title = 'OBD-II Emulator Control'
 
         
 
-class Application(Frame):
+class Application(ttk.Frame):
     lbl    = [None] * 20
     ent    = [None] * 20
     btnSet = [None] * 20
@@ -55,36 +56,36 @@ class Application(Frame):
         self.callback = callback
 
         # Parameter Label
-        self.lbl[index] = Label(self)
+        self.lbl[index] = ttk.Label(self)
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
-        self.lbl[index].configure(background=bgcolour)
+        #self.lbl[index].configure(background=bgcolour)
 
         # Parameter Decrement Button
-        self.btnDec[index] = Button(self)
+        self.btnDec[index] = ttk.Button(self)
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
         self.btnDec[index].grid(sticky="E", row=row, column=column+2)
-        self.btnDec[index].configure(highlightbackground=bgcolour)
+        #self.btnDec[index].configure(highlightbackground=bgcolour)
 
         # Parameter Entry
-        self.ent[index] = Entry(self, validate="focusout", validatecommand=callback)
+        self.ent[index] = ttk.Entry(self, validate="focusout", validatecommand=callback)
         self.ent[index].grid(sticky="WE", row=row, column=column+3, columnspan=2)
-        self.ent[index].configure(highlightbackground=bgcolour)
+        #self.ent[index].configure(highlightbackground=bgcolour)
         
         # Parameter Increment Button
-        self.btnInc[index] = Button(self)
+        self.btnInc[index] = ttk.Button(self)
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
         self.btnInc[index].grid(sticky="W", row=row, column=column+5)
-        self.btnInc[index].configure(highlightbackground=bgcolour)
+        #self.btnInc[index].configure(highlightbackground=bgcolour)
 
         # Parameter Setting Apply Button
-        self.btnSet[index] = Button(self)
+        self.btnSet[index] = ttk.Button(self)
         self.btnSet[index]["text"] = "Apply"
         self.btnSet[index]["command"] = callback
         self.btnSet[index].grid(sticky="W", row=row, column=column+6)
-        self.btnSet[index].configure(highlightbackground=bgcolour)
+        #self.btnSet[index].configure(highlightbackground=bgcolour)
 
 
 
@@ -97,10 +98,14 @@ class Application(Frame):
     def connectDevice(self):
         self.device.connectDevice()
         self.lblStatus["text"] = "Status: Connected"
+        self.btnConnectDevice["state"] = "disabled"
+        self.btnDisconnect["state"] = "normal"
     
     def closeDevice(self):
         self.device.closeConnection()
         self.lblStatus["text"] = "Status: Disconnected"
+        self.btnConnectDevice["state"] = "normal"
+        self.btnDisconnect["state"] = "disabled"
 
 
     def cmdIncreaseEngineRPM(self):
@@ -276,78 +281,78 @@ class Application(Frame):
         self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        9, 1)
         self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 10, 1)
         
-        self.lblVIN = Label(self)
+        self.lblVIN = ttk.Label(self)
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=3, column=1)
-        self.lblVIN.configure(highlightbackground=bgcolour, background=bgcolour)
-        self.entVIN = Entry(self) #, validate="focusout", validatecommand=cmdVIN)
+        #self.lblVIN.configure(highlightbackground=bgcolour, background=bgcolour)
+        self.entVIN = ttk.Entry(self) #, validate="focusout", validatecommand=cmdVIN)
         self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=4)
-        self.entVIN.configure(highlightbackground=bgcolour)
-        self.btnVIN = Button(self)
+        #self.entVIN.configure(highlightbackground=bgcolour)
+        self.btnVIN = ttk.Button(self)
         self.btnVIN["text"] = "Apply"
-        self.btnVIN["fg"]   = "red"
+        #self.btnVIN["fg"]   = "red"
         self.btnVIN.grid(row=3,column=7)
-        self.btnVIN.configure(highlightbackground=bgcolour)
+        #self.btnVIN.configure(highlightbackground=bgcolour)
         
 
-        self.btnQuit = Button(self)
+        self.btnQuit = ttk.Button(self)
         self.btnQuit["text"] = "QUIT"
-        self.btnQuit["fg"]   = "red"
+        #self.btnQuit["foreground"]   = "red"
         self.btnQuit["command"] =  ask_quit
         self.btnQuit.grid(row=1,column=5)
-        self.btnQuit.configure(highlightbackground=bgcolour)
+        #self.btnQuit.configure(highlightbackground=bgcolour)
 
-        self.btnConnectDevice = Button(self)
+        self.btnConnectDevice = ttk.Button(self)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
         self.btnConnectDevice.grid(row=1, column=1)
-        self.btnConnectDevice.configure(highlightbackground=bgcolour)
+        #self.btnConnectDevice.configure(highlightbackground=bgcolour)
 
-        self.btnClose = Button(self)
-        self.btnClose["text"] = "Disconnect Device"
-        self.btnClose["fg"]   = "red"
-        self.btnClose["command"] =  self.closeDevice
-        self.btnClose.grid(row=1, column=2)
-        self.btnClose.configure(highlightbackground=bgcolour)
+        self.btnDisconnect = ttk.Button(self)
+        self.btnDisconnect["text"] = "Disconnect Device"
+        #self.btnDisconnect["fg"]   = "red"
+        self.btnDisconnect["command"] =  self.closeDevice
+        self.btnDisconnect.grid(row=1, column=2)
+        #self.btnDisconnect.configure(highlightbackground=bgcolour)
 
-        self.lblStatus = Label(self)
+        self.lblStatus = ttk.Label(self)
         self.lblStatus["text"] = "Status: Disconnected"
         self.lblStatus.grid(sticky="W", row=2, column=1)
-        self.lblStatus.configure(highlightbackground=bgcolour, background=bgcolour)
+        #self.lblStatus.configure(highlightbackground=bgcolour, background=bgcolour)
 
-        self.lblPID = Label(self)
+        self.lblPID = ttk.Label(self)
         self.lblPID["text"] = "PID"
         self.lblPID.grid(sticky="W", row=11, column=1)
-        self.lblPID.configure(highlightbackground=bgcolour, background=bgcolour)
-        self.entPID = Entry(self)
+        #self.lblPID.configure(highlightbackground=bgcolour, background=bgcolour)
+        self.entPID = ttk.Entry(self)
         self.entPID.grid(sticky="WE", row=11, column=2)
-        self.entPID.configure(highlightbackground=bgcolour)
-        self.btnPIDValueDec = Button(self)
+        #self.entPID.configure(highlightbackground=bgcolour)
+        self.btnPIDValueDec = ttk.Button(self)
         self.btnPIDValueDec["text"] = "-"
-        self.btnPIDValueDec["fg"]   = "red"
+        #self.btnPIDValueDec["fg"]   = "red"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
-        self.btnPIDValueDec.configure(highlightbackground=bgcolour)
-        self.entPIDValue = Entry(self)
+        #self.btnPIDValueDec.configure(highlightbackground=bgcolour)
+        self.entPIDValue = ttk.Entry(self)
         self.entPIDValue.grid(sticky="WE", row=11, column=4, columnspan=2)
-        self.entPIDValue.configure(highlightbackground=bgcolour)
-        self.btnPIDValueInc = Button(self)
+        #self.entPIDValue.configure(highlightbackground=bgcolour)
+        self.btnPIDValueInc = ttk.Button(self)
         self.btnPIDValueInc["text"] = "+"
-        self.btnPIDValueInc["fg"]   = "red"
+        #self.btnPIDValueInc["fg"]   = "red"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
         self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
-        self.btnPIDValueInc.configure(highlightbackground=bgcolour)
-        self.btnPIDValueApply = Button(self)
+        #self.btnPIDValueInc.configure(highlightbackground=bgcolour)
+        self.btnPIDValueApply = ttk.Button(self)
         self.btnPIDValueApply["text"] = "Apply"
-        self.btnPIDValueApply["fg"]   = "red"
+        #self.btnPIDValueApply["fg"]   = "red"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=11,column=7)
-        self.btnPIDValueApply.configure(highlightbackground=bgcolour)
+        #self.btnPIDValueApply.configure(highlightbackground=bgcolour)
 
 
 
     def __init__(self, master=None):
-        Frame.__init__(self, master)
+        ttk.Frame.__init__(self, master)
         self.device = obd.OBDEmulator()
         self.pack()
         self.createWidgets()
@@ -373,7 +378,22 @@ def popup_about():
     b.grid(row=2, column=0)
 
 
+
 root = Tk()
+
+s = ttk.Style()
+root.style = ttk.Style()
+#print (s.theme_names())
+#s.theme_use('clam')
+#root.style.theme_use('clam')
+#root.style.configure('TButton', background='grey')
+#root.style.configure('TButton', foreground='black')
+#root.style.configure('TButton', highlightcolor='red')
+root.style.map('TButton', background=[('disabled','#d9d9d9'), ('active','#ececec')], foreground=[('disabled','#a3a3a3')], relief=[('pressed', '!disabled', 'sunken')])
+
+
+
+
 appVersion = "0.0.1"
 root.wm_title(title + ' ' + appVersion)
 menubar = Menu(root)
@@ -388,7 +408,7 @@ root.configure(background=bgcolour)
 
 root.protocol("WM_DELETE_WINDOW", ask_quit)
 app = Application(master=root)
-app.configure(background=bgcolour)
+#app.configure(background=bgcolour)
 
 root.mainloop()
 
