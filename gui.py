@@ -391,7 +391,7 @@ root.style.theme_use('clam')
 #root.style.configure('TButton', foreground='black')
 #root.style.configure('TButton', highlightcolor='red')
 root.style.map('TButton', background=[('disabled','#d9d9d9'), ('active','#ececec')], foreground=[('disabled','#a3a3a3')], relief=[('pressed', '!disabled', 'sunken')])
-
+root.style.configure('TLabel', background='grey')
 root.style.configure('TFrame', background='grey')
 
 
