@@ -73,7 +73,7 @@ class Application(ttk.Frame):
 
         # Parameter Entry
         self.ent[index] = ttk.Entry(self, validate="focusout", validatecommand=callback)
-        self.ent[index].grid(sticky="WE", row=row, column=column+3, columnspan=2)
+        self.ent[index].grid(sticky="NSWE", row=row, column=column+3, columnspan=2)
         #self.ent[index].configure(highlightbackground=bgcolour)
         
         # Parameter Increment Button
@@ -289,7 +289,7 @@ class Application(ttk.Frame):
         self.lblVIN.grid(sticky="W", row=3, column=1)
 
         self.entVIN = ttk.Entry(self) #, validate="focusout", validatecommand=cmdVIN)
-        self.entVIN.grid(sticky="WE", row=3, column=2, columnspan=4)
+        self.entVIN.grid(sticky="NSWE", row=3, column=2, columnspan=4)
 
         self.btnVIN = ttk.Button(self)
         self.btnVIN["text"] = "Apply"
@@ -319,7 +319,7 @@ class Application(ttk.Frame):
         self.lblPID.grid(sticky="W", row=11, column=1)
 
         self.entPID = ttk.Entry(self)
-        self.entPID.grid(sticky="WE", row=11, column=2)
+        self.entPID.grid(sticky="NSWE", row=11, column=2)
 
         self.btnPIDValueDec = ttk.Button(self)
         self.btnPIDValueDec["text"] = "-"
@@ -327,7 +327,7 @@ class Application(ttk.Frame):
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
 
         self.entPIDValue = ttk.Entry(self)
-        self.entPIDValue.grid(sticky="WE", row=11, column=4, columnspan=2)
+        self.entPIDValue.grid(sticky="NSWE", row=11, column=4, columnspan=2)
 
         self.btnPIDValueInc = ttk.Button(self)
         self.btnPIDValueInc["text"] = "+"
