@@ -5,7 +5,7 @@
 
 import serial
 import serial.tools.list_ports
-
+import log
 
 ########################################
 # OBDEmulator class
@@ -20,13 +20,13 @@ class OBDEmulator:
   ########################################
   # scanSerialPorts
   def scanSerialPorts(self):
-    print ("Scanning serial ports")
+    log.output ("Scanning serial ports")
     portlist = serial.tools.list_ports
     
     iterator = serial.tools.list_ports.grep(self.portIdString)
 
     #for i in portlist:
-    #  print (i.ListPortInfo)
+    #  log.output (i.ListPortInfo)
     
     devicesFound = 0
     for c, (port, desc, hwid) in enumerate(iterator):
@@ -38,10 +38,10 @@ class OBDEmulator:
     devicesFound = 1
     '''
     if devicesFound == 1:
-      print("Found OBD-II device {}".format(portPath))
+      log.output("Found OBD-II device {}".format(portPath))
       return True, portPath
     else:
-      print("{} OBD-II devices found".format(devicesFound))
+      log.output("{} OBD-II devices found".format(devicesFound))
       return False
 
   ########################################
@@ -51,14 +51,14 @@ class OBDEmulator:
     #i = True
     #portPath = '/dev/tty.SLAB_USBtoUART'
     if i == True:
-      print ("Connecting")
+      log.output ("Connecting")
       self.serialPort = serial.Serial(portPath, baudrate=self.baudRate, timeout=1)
-      print ("Connected to: " + self.serialPort.name)
+      log.output ("Connected to: " + self.serialPort.name)
 
   ########################################
   # closeConnection
   def closeConnection(self):
-    print ("Disconnecting")
+    log.output ("Disconnecting")
     self.serialPort.close()
 
   ########################################
@@ -66,17 +66,17 @@ class OBDEmulator:
   def sendCommand(self, command):
     self.serialPort.write((command.encode() + b'\r'))
     out = self.serialPort.readline()
-    print ('<<' + out.decode())
+    log.output ('<<' + out.decode())
     #out = self.serialPort.readline()
-    #print '<<' + out
+    #log.output ('<<' + out)
     #out = self.serialPort.readline()
-    #print '<<' + out
+    #log.output ('<<' + out)
     #out = self.serialPort.readline()
-    #print '<<' + out
+    #log.output ('<<' + out)
     #out = self.serialPort.readline()
-    #print '<<' + out
+    #log.output ('<<' + out)
     #out = self.serialPort.readline()
-    #print '<<' + out
+    #log.output ('<<' + out)
 
   ########################################
   # Function:    setPidValue
@@ -84,8 +84,8 @@ class OBDEmulator:
   # Description: Set PID Value
   def setPIDValue(self, pid, pidValue):
     self.sendCommand("ATSET " + pid + "=" + str(pidValue))
-    print ("PID = " + pid)
-    print ("PID Value = " + str(pidValue))
+    log.output ("PID = " + pid)
+    log.output ("PID Value = " + str(pidValue))
 
   
   ########################################
@@ -126,23 +126,23 @@ class OBDEmulator:
   def getEngineFuelRate(self):
     self.sendCommand("ATGET 015E")
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
-    print ("<<<<< " + str(out))
+    log.output ("<<<<< " + str(out))
     
   ########################################
   # Function:    setMAFAirFlowRate
@@ -165,7 +165,7 @@ class OBDEmulator:
 def main():
   obd = OBDEmulator()
 
-  print ('OBD-II Emulator Controller')
+  log.output ('OBD-II Emulator Controller')
   
   obd.connectDevice()
 

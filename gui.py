@@ -9,10 +9,13 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import obd
+import log
 
 #window=Tk()
 
-print ("GUI")
+
+
+log.output("GUI")
 
 bgcolour = 'lightblue'
 title = 'OBD-II Emulator Control'
@@ -51,7 +54,7 @@ class Application(ttk.Frame):
 
     
     def paramControl(self, index, label, callback, callbackDecParameter, callbackIncParameter, row, column):
-        print ("Label = " + label)
+        log.output ("Label = " + label)
         self.label = label
         self.callback = callback
 
@@ -92,7 +95,7 @@ class Application(ttk.Frame):
     def initialiseParams(self):
         for i in range(self.ID_ENGINERPM, self.ID_CALCULATEDENGINELOAD + 1):
             self.ent[i].insert(0, self.paramValue[i])
-        print()
+        log.output("")
 
 
     def connectDevice(self):
@@ -259,17 +262,17 @@ class Application(ttk.Frame):
     
         ###pid = self.entPID.get()
         ###pidValue = self.entPIDValue.get()
-        print ("PID = " + pid)
-        print ("PID Value= " + str(pidValue))
+        log.output ("PID = " + pid)
+        log.output ("PID Value= " + str(pidValue))
 
 
     def cmdTest(self):
-        print ("test")
+        log.output ("test")
         obd.main()
         
 
     def callback(self):
-        print ("Callback!")
+        log.output ("Callback!")
 
     
     def createWidgets(self):
@@ -384,7 +387,7 @@ root = Tk()
 
 s = ttk.Style()
 root.style = ttk.Style()
-#print (s.theme_names())
+#log.output (s.theme_names())
 root.style.theme_use('clam')
 #root.style.theme_use('clam')
 #root.style.configure('TButton', background='grey')
