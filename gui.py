@@ -57,6 +57,7 @@ class Application(ttk.Frame):
         log.output ("Label = " + label)
         self.label = label
         self.callback = callback
+        
 
         # Parameter Label
         self.lbl[index] = ttk.Label(self.frmParameters)
@@ -64,7 +65,7 @@ class Application(ttk.Frame):
         self.lbl[index].grid(sticky="W", row=row, column=column)
 
         # Parameter Decrement Button
-        self.btnDec[index] = ttk.Button(self.frmParameters)
+        self.btnDec[index] = ttk.Button(self.frmParameters, style="Bold1.TButton")
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
         self.btnDec[index].grid(sticky="E", row=row, column=column+2)
@@ -74,7 +75,7 @@ class Application(ttk.Frame):
         self.ent[index].grid(sticky="NSWE", row=row, column=column+3, columnspan=2)
         
         # Parameter Increment Button
-        self.btnInc[index] = ttk.Button(self.frmParameters)
+        self.btnInc[index] = ttk.Button(self.frmParameters, style="Bold1.TButton")
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
         self.btnInc[index].grid(sticky="W", row=row, column=column+5)
@@ -272,8 +273,8 @@ class Application(ttk.Frame):
     
     def createWidgets(self):
 
-        boldStyle = ttk.Style()
-        boldStyle.configure("Bold.TLabel", font = ('Sans', '20', 'bold'), background='royal blue')
+        heading1Style = ttk.Style()
+        heading1Style.configure("Heading1.TLabel", font = ('Sans', '20', 'bold'), background='royal blue')
         
         frameStyle = ttk.Style()
         frameStyle.configure("Blue.TFrame", background='royal blue')
@@ -281,7 +282,7 @@ class Application(ttk.Frame):
         self.frmHeading = ttk.Frame(self.frmApp, style="Blue.TFrame")
         self.frmHeading.grid(row=0, column=0, rowspan=1, columnspan=6, sticky=N+S+E+W)
 
-        self.lblHeading = ttk.Label(self.frmHeading, style="Bold.TLabel")
+        self.lblHeading = ttk.Label(self.frmHeading, style="Heading1.TLabel")
         self.lblHeading["text"] = "OBD-II Emulator Control"
         self.lblHeading.grid(row=0, column=0, sticky=N+S+E+W)
 
@@ -342,7 +343,7 @@ class Application(ttk.Frame):
         self.entPID = ttk.Entry(self.frmParameters)
         self.entPID.grid(sticky="NSWE", row=11, column=2)
 
-        self.btnPIDValueDec = ttk.Button(self.frmParameters)
+        self.btnPIDValueDec = ttk.Button(self.frmParameters, style="Bold1.TButton")
         self.btnPIDValueDec["text"] = "-"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
@@ -350,7 +351,7 @@ class Application(ttk.Frame):
         self.entPIDValue = ttk.Entry(self.frmParameters)
         self.entPIDValue.grid(sticky="NSWE", row=11, column=4, columnspan=2)
 
-        self.btnPIDValueInc = ttk.Button(self.frmParameters)
+        self.btnPIDValueInc = ttk.Button(self.frmParameters, style="Bold1.TButton")
         self.btnPIDValueInc["text"] = "+"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
         self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
@@ -436,8 +437,9 @@ def main(argv):
     root.style.configure('TLabel', background='grey')
     root.style.configure('TFrame', background='grey')
 
-
-
+    # Style for the Inc/Dec buttons
+    bold1Style = ttk.Style()
+    bold1Style.configure("Bold1.TButton", font = ('Sans', '20', 'bold'))
 
     appVersion = "0.0.1"
     root.wm_title(title + ' ' + appVersion)
