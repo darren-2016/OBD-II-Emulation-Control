@@ -59,32 +59,32 @@ class Application(ttk.Frame):
         self.callback = callback
 
         # Parameter Label
-        self.lbl[index] = ttk.Label(self)
+        self.lbl[index] = ttk.Label(self.frmApp)
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
         #self.lbl[index].configure(background=bgcolour)
 
         # Parameter Decrement Button
-        self.btnDec[index] = ttk.Button(self)
+        self.btnDec[index] = ttk.Button(self.frmApp)
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
         self.btnDec[index].grid(sticky="E", row=row, column=column+2)
         #self.btnDec[index].configure(highlightbackground=bgcolour)
 
         # Parameter Entry
-        self.ent[index] = ttk.Entry(self, validate="focusout", validatecommand=callback)
+        self.ent[index] = ttk.Entry(self.frmApp, validate="focusout", validatecommand=callback)
         self.ent[index].grid(sticky="NSWE", row=row, column=column+3, columnspan=2)
         #self.ent[index].configure(highlightbackground=bgcolour)
         
         # Parameter Increment Button
-        self.btnInc[index] = ttk.Button(self)
+        self.btnInc[index] = ttk.Button(self.frmApp)
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
         self.btnInc[index].grid(sticky="W", row=row, column=column+5)
         #self.btnInc[index].configure(highlightbackground=bgcolour)
 
         # Parameter Setting Apply Button
-        self.btnSet[index] = ttk.Button(self)
+        self.btnSet[index] = ttk.Button(self.frmApp)
         self.btnSet[index]["text"] = "Apply"
         self.btnSet[index]["command"] = callback
         self.btnSet[index].grid(sticky="W", row=row, column=column+6)
@@ -284,57 +284,57 @@ class Application(ttk.Frame):
         self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        9, 1)
         self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 10, 1)
         
-        self.lblVIN = ttk.Label(self)
+        self.lblVIN = ttk.Label(self.frmApp)
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=3, column=1)
 
-        self.entVIN = ttk.Entry(self) #, validate="focusout", validatecommand=cmdVIN)
+        self.entVIN = ttk.Entry(self.frmApp) #, validate="focusout", validatecommand=cmdVIN)
         self.entVIN.grid(sticky="NSWE", row=3, column=2, columnspan=4)
 
-        self.btnVIN = ttk.Button(self)
+        self.btnVIN = ttk.Button(self.frmApp)
         self.btnVIN["text"] = "Apply"
-        self.btnVIN.grid(row=3,column=7)        
+        self.btnVIN.grid(row=3,column=7)
 
-        self.btnQuit = ttk.Button(self)
+        self.btnQuit = ttk.Button(self.frmApp)
         self.btnQuit["text"] = "QUIT"
         self.btnQuit["command"] =  ask_quit
         self.btnQuit.grid(row=1,column=5)
 
-        self.btnConnectDevice = ttk.Button(self)
+        self.btnConnectDevice = ttk.Button(self.frmApp)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
         self.btnConnectDevice.grid(row=1, column=1)
 
-        self.btnDisconnect = ttk.Button(self)
+        self.btnDisconnect = ttk.Button(self.frmApp)
         self.btnDisconnect["text"] = "Disconnect Device"
         self.btnDisconnect["command"] =  self.closeDevice
         self.btnDisconnect.grid(row=1, column=2)
 
-        self.lblStatus = ttk.Label(self)
+        self.lblStatus = ttk.Label(self.frmApp)
         self.lblStatus["text"] = "Status: Disconnected"
         self.lblStatus.grid(sticky="W", row=2, column=1)
 
-        self.lblPID = ttk.Label(self)
+        self.lblPID = ttk.Label(self.frmApp)
         self.lblPID["text"] = "PID"
         self.lblPID.grid(sticky="W", row=11, column=1)
 
-        self.entPID = ttk.Entry(self)
+        self.entPID = ttk.Entry(self.frmApp)
         self.entPID.grid(sticky="NSWE", row=11, column=2)
 
-        self.btnPIDValueDec = ttk.Button(self)
+        self.btnPIDValueDec = ttk.Button(self.frmApp)
         self.btnPIDValueDec["text"] = "-"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
 
-        self.entPIDValue = ttk.Entry(self)
+        self.entPIDValue = ttk.Entry(self.frmApp)
         self.entPIDValue.grid(sticky="NSWE", row=11, column=4, columnspan=2)
 
-        self.btnPIDValueInc = ttk.Button(self)
+        self.btnPIDValueInc = ttk.Button(self.frmApp)
         self.btnPIDValueInc["text"] = "+"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
         self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
 
-        self.btnPIDValueApply = ttk.Button(self)
+        self.btnPIDValueApply = ttk.Button(self.frmApp)
         self.btnPIDValueApply["text"] = "Apply"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=11,column=7)
@@ -342,11 +342,29 @@ class Application(ttk.Frame):
 
 
     def __init__(self, master=None):
+        self.frmApp = ttk.Frame(master)
+        self.frmApp.grid(column=0, row=0, columnspan=1, sticky=N+S+E+W)
+        #self.frmApp.grid_columnconfigure(0, weight=1)
+        #self.frmApp.grid_rowconfigure(0, weight=1)
+
+        self.device = obd.OBDEmulator()
+        #self.frmApp.pack()
+        self.createWidgets()
+        self.initialiseParams()
+
+        '''
         ttk.Frame.__init__(self, master)
+        ttk.Frame.grid(self, column=0, row=0, sticky=N+S+E+W)
+        ttk.Frame.grid_columnconfigure(self, 0, weight=1)
+        ttk.Frame.grid_rowconfigure(self, 0, weight=1)
+        '''
+
+        '''
         self.device = obd.OBDEmulator()
         self.pack()
         self.createWidgets()
         self.initialiseParams()
+        '''
 
 
 
@@ -383,9 +401,12 @@ def popup_about():
 
 
 
+############################################################
+# Main program
+#
 root = Tk()
 
-s = ttk.Style()
+#s = ttk.Style()
 root.style = ttk.Style()
 #log.output (s.theme_names())
 root.style.theme_use('clam')
@@ -410,10 +431,13 @@ filemenu.add_command(label="Quit!", command=ask_quit)
 menubar.add_cascade(label="File", menu=filemenu)
 root.config(menu=menubar)
 root.configure(background=bgcolour)
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
 
 
 root.protocol("WM_DELETE_WINDOW", ask_quit)
 app = Application(master=root)
+
 
 root.mainloop()
 
