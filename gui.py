@@ -372,6 +372,7 @@ class Application(ttk.Frame):
 # Quit confirmation popup dialog
 #
 def ask_quit():
+    global root
     if messagebox.askokcancel("Quit", "You want to quit now?"):
         root.destroy()
 
@@ -404,42 +405,57 @@ def popup_about():
 ############################################################
 # Main program
 #
+def main(argv):
+    global root
+    #root = Tk()
+
+    numArgs = len(argv)
+
+    #print ("Number of args: " + str(numArgs))
+
+    if numArgs == 1:
+        if argv[0] == 'logging':
+            log.level(1)
+    
+    #s = ttk.Style()
+    root.style = ttk.Style()
+    #log.output (s.theme_names())
+    root.style.theme_use('clam')
+    #root.style.theme_use('clam')
+    #root.style.configure('TButton', background='grey')
+    #root.style.configure('TButton', foreground='black')
+    #root.style.configure('TButton', highlightcolor='red')
+    root.style.map('TButton', background=[('disabled','#d9d9d9'), ('active','#ececec')], foreground=[('disabled','#a3a3a3')], relief=[('pressed', '!disabled', 'sunken')])
+    root.style.configure('TLabel', background='grey')
+    root.style.configure('TFrame', background='grey')
+
+
+
+
+    appVersion = "0.0.1"
+    root.wm_title(title + ' ' + appVersion)
+    menubar = Menu(root)
+    filemenu = Menu(menubar, tearoff=0)
+    #self.menubar.add_command(label="Hello!", command=hello)
+    filemenu.add_command(label="About", command=popup_about)
+    filemenu.add_command(label="Quit!", command=ask_quit)
+    menubar.add_cascade(label="File", menu=filemenu)
+    root.config(menu=menubar)
+    root.configure(background=bgcolour)
+    root.columnconfigure(0, weight=1)
+    root.rowconfigure(0, weight=1)
+
+
+    root.protocol("WM_DELETE_WINDOW", ask_quit)
+    app = Application(master=root)
+
+
+    root.mainloop()
+
+
+global root
+
 root = Tk()
 
-#s = ttk.Style()
-root.style = ttk.Style()
-#log.output (s.theme_names())
-root.style.theme_use('clam')
-#root.style.theme_use('clam')
-#root.style.configure('TButton', background='grey')
-#root.style.configure('TButton', foreground='black')
-#root.style.configure('TButton', highlightcolor='red')
-root.style.map('TButton', background=[('disabled','#d9d9d9'), ('active','#ececec')], foreground=[('disabled','#a3a3a3')], relief=[('pressed', '!disabled', 'sunken')])
-root.style.configure('TLabel', background='grey')
-root.style.configure('TFrame', background='grey')
-
-
-
-
-appVersion = "0.0.1"
-root.wm_title(title + ' ' + appVersion)
-menubar = Menu(root)
-filemenu = Menu(menubar, tearoff=0)
-#self.menubar.add_command(label="Hello!", command=hello)
-filemenu.add_command(label="About", command=popup_about)
-filemenu.add_command(label="Quit!", command=ask_quit)
-menubar.add_cascade(label="File", menu=filemenu)
-root.config(menu=menubar)
-root.configure(background=bgcolour)
-root.columnconfigure(0, weight=1)
-root.rowconfigure(0, weight=1)
-
-
-root.protocol("WM_DELETE_WINDOW", ask_quit)
-app = Application(master=root)
-
-
-root.mainloop()
-
-
-
+if __name__ == "__main__":
+    main(sys.argv[1:])
