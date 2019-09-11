@@ -59,28 +59,28 @@ class Application(ttk.Frame):
         self.callback = callback
 
         # Parameter Label
-        self.lbl[index] = ttk.Label(self.frmApp)
+        self.lbl[index] = ttk.Label(self.frmParameters)
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
 
         # Parameter Decrement Button
-        self.btnDec[index] = ttk.Button(self.frmApp)
+        self.btnDec[index] = ttk.Button(self.frmParameters)
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
         self.btnDec[index].grid(sticky="E", row=row, column=column+2)
 
         # Parameter Entry
-        self.ent[index] = ttk.Entry(self.frmApp, validate="focusout", validatecommand=callback)
+        self.ent[index] = ttk.Entry(self.frmParameters, validate="focusout", validatecommand=callback)
         self.ent[index].grid(sticky="NSWE", row=row, column=column+3, columnspan=2)
         
         # Parameter Increment Button
-        self.btnInc[index] = ttk.Button(self.frmApp)
+        self.btnInc[index] = ttk.Button(self.frmParameters)
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
         self.btnInc[index].grid(sticky="W", row=row, column=column+5)
 
         # Parameter Setting Apply Button
-        self.btnSet[index] = ttk.Button(self.frmApp)
+        self.btnSet[index] = ttk.Button(self.frmParameters)
         self.btnSet[index]["text"] = "Apply"
         self.btnSet[index]["command"] = callback
         self.btnSet[index].grid(sticky="W", row=row, column=column+6)
@@ -271,6 +271,18 @@ class Application(ttk.Frame):
 
     
     def createWidgets(self):
+
+        self.frmDeviceConnection = ttk.Frame(self.frmApp, relief=SUNKEN)
+        self.frmDeviceConnection.grid(row=0, column=0, columnspan=4, sticky=N+S+E+W)
+
+        self.lblProtocol = ttk.Label(self.frmApp)
+        self.lblProtocol["text"] = "Protocol: ----"
+        self.lblProtocol.grid(sticky="W", row=1, column=1)
+
+        self.frmParameters = ttk.Frame(self.frmApp, relief=SUNKEN)
+        self.frmParameters.grid(row=2, column=0, columnspan=6, rowspan=10)
+
+
         self.paramControl(self.ID_ENGINERPM,            "Engine RPM",             self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             4, 1)
         self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,          5, 1)        
         self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,      6, 1)
@@ -279,57 +291,57 @@ class Application(ttk.Frame):
         self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        9, 1)
         self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 10, 1)
         
-        self.lblVIN = ttk.Label(self.frmApp)
+        self.lblVIN = ttk.Label(self.frmParameters)
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=3, column=1)
 
-        self.entVIN = ttk.Entry(self.frmApp) #, validate="focusout", validatecommand=cmdVIN)
+        self.entVIN = ttk.Entry(self.frmParameters) #, validate="focusout", validatecommand=cmdVIN)
         self.entVIN.grid(sticky="NSWE", row=3, column=2, columnspan=4)
 
-        self.btnVIN = ttk.Button(self.frmApp)
+        self.btnVIN = ttk.Button(self.frmParameters)
         self.btnVIN["text"] = "Apply"
         self.btnVIN.grid(row=3,column=7)
 
         self.btnQuit = ttk.Button(self.frmApp)
         self.btnQuit["text"] = "QUIT"
         self.btnQuit["command"] =  ask_quit
-        self.btnQuit.grid(row=1,column=7, sticky=N+S+E+W)
+        self.btnQuit.grid(row=0,column=5, sticky=N+S+E+W)
 
-        self.btnConnectDevice = ttk.Button(self.frmApp)
+        self.btnConnectDevice = ttk.Button(self.frmDeviceConnection)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
-        self.btnConnectDevice.grid(row=1, column=1, sticky=N+S+E+W)
+        self.btnConnectDevice.grid(row=0, column=1, sticky=N+S+E+W)
 
-        self.btnDisconnect = ttk.Button(self.frmApp)
+        self.btnDisconnect = ttk.Button(self.frmDeviceConnection)
         self.btnDisconnect["text"] = "Disconnect Device"
         self.btnDisconnect["command"] =  self.closeDevice
-        self.btnDisconnect.grid(row=1, column=2, sticky=N+S+E+W)
+        self.btnDisconnect.grid(row=0, column=2, sticky=N+S+E+W)
 
-        self.lblStatus = ttk.Label(self.frmApp)
+        self.lblStatus = ttk.Label(self.frmDeviceConnection)
         self.lblStatus["text"] = "Status: Disconnected"
-        self.lblStatus.grid(sticky="W", row=1, column=4)
+        self.lblStatus.grid(sticky="W", row=0, column=4)
 
-        self.lblPID = ttk.Label(self.frmApp)
+        self.lblPID = ttk.Label(self.frmParameters)
         self.lblPID["text"] = "PID"
         self.lblPID.grid(sticky="W", row=11, column=1)
 
-        self.entPID = ttk.Entry(self.frmApp)
+        self.entPID = ttk.Entry(self.frmParameters)
         self.entPID.grid(sticky="NSWE", row=11, column=2)
 
-        self.btnPIDValueDec = ttk.Button(self.frmApp)
+        self.btnPIDValueDec = ttk.Button(self.frmParameters)
         self.btnPIDValueDec["text"] = "-"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
         self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
 
-        self.entPIDValue = ttk.Entry(self.frmApp)
+        self.entPIDValue = ttk.Entry(self.frmParameters)
         self.entPIDValue.grid(sticky="NSWE", row=11, column=4, columnspan=2)
 
-        self.btnPIDValueInc = ttk.Button(self.frmApp)
+        self.btnPIDValueInc = ttk.Button(self.frmParameters)
         self.btnPIDValueInc["text"] = "+"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
         self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
 
-        self.btnPIDValueApply = ttk.Button(self.frmApp)
+        self.btnPIDValueApply = ttk.Button(self.frmParameters)
         self.btnPIDValueApply["text"] = "Apply"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=11,column=7)
