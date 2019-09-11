@@ -293,21 +293,21 @@ class Application(ttk.Frame):
         self.btnQuit = ttk.Button(self.frmApp)
         self.btnQuit["text"] = "QUIT"
         self.btnQuit["command"] =  ask_quit
-        self.btnQuit.grid(row=1,column=5)
+        self.btnQuit.grid(row=1,column=7, sticky=N+S+E+W)
 
         self.btnConnectDevice = ttk.Button(self.frmApp)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
-        self.btnConnectDevice.grid(row=1, column=1)
+        self.btnConnectDevice.grid(row=1, column=1, sticky=N+S+E+W)
 
         self.btnDisconnect = ttk.Button(self.frmApp)
         self.btnDisconnect["text"] = "Disconnect Device"
         self.btnDisconnect["command"] =  self.closeDevice
-        self.btnDisconnect.grid(row=1, column=2)
+        self.btnDisconnect.grid(row=1, column=2, sticky=N+S+E+W)
 
         self.lblStatus = ttk.Label(self.frmApp)
         self.lblStatus["text"] = "Status: Disconnected"
-        self.lblStatus.grid(sticky="W", row=2, column=1)
+        self.lblStatus.grid(sticky="W", row=1, column=4)
 
         self.lblPID = ttk.Label(self.frmApp)
         self.lblPID["text"] = "PID"
@@ -335,6 +335,9 @@ class Application(ttk.Frame):
         self.btnPIDValueApply.grid(row=11,column=7)
         
 
+    def initialiseWidgets(self):
+        self.btnDisconnect["state"] = "disabled"
+
 
     def __init__(self, master=None):
         self.frmApp = ttk.Frame(master)
@@ -343,6 +346,7 @@ class Application(ttk.Frame):
         self.device = obd.OBDEmulator()
         #self.frmApp.pack()
         self.createWidgets()
+        self.initialiseWidgets()
         self.initialiseParams()
 
         
