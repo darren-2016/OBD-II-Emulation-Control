@@ -276,7 +276,7 @@ class Application(ttk.Frame):
 
     
     def createWidgets(self):
-        self.paramControl(self.ID_ENGINERPM,            "EngineRPM",              self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             4, 1)
+        self.paramControl(self.ID_ENGINERPM,            "Engine RPM",             self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             4, 1)
         self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,          5, 1)        
         self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,      6, 1)
         self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseFuelLevelInput,       self.cmdIncreaseFuelLevelInput,        7, 1)
@@ -407,7 +407,6 @@ def popup_about():
 #
 def main(argv):
     global root
-    #root = Tk()
 
     numArgs = len(argv)
 
@@ -417,7 +416,6 @@ def main(argv):
         if argv[0] == 'logging':
             log.level(1)
     
-    #s = ttk.Style()
     root.style = ttk.Style()
     #log.output (s.theme_names())
     root.style.theme_use('clam')
