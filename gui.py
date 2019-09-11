@@ -272,15 +272,29 @@ class Application(ttk.Frame):
     
     def createWidgets(self):
 
+        boldStyle = ttk.Style()
+        boldStyle.configure("Bold.TLabel", font = ('Sans', '20', 'bold'), background='royal blue')
+        
+        frameStyle = ttk.Style()
+        frameStyle.configure("Blue.TFrame", background='royal blue')
+
+        self.frmHeading = ttk.Frame(self.frmApp, style="Blue.TFrame")
+        self.frmHeading.grid(row=0, column=0, rowspan=1, columnspan=6, sticky=N+S+E+W)
+
+        self.lblHeading = ttk.Label(self.frmHeading, style="Bold.TLabel")
+        self.lblHeading["text"] = "OBD-II Emulator Control"
+        self.lblHeading.grid(row=0, column=0, sticky=N+S+E+W)
+
+
         self.frmDeviceConnection = ttk.Frame(self.frmApp, relief=SUNKEN)
-        self.frmDeviceConnection.grid(row=0, column=0, columnspan=4, sticky=N+S+E+W)
+        self.frmDeviceConnection.grid(row=1, column=0, columnspan=4, sticky=N+S+E+W)
 
         self.lblProtocol = ttk.Label(self.frmApp)
         self.lblProtocol["text"] = "Protocol: ----"
-        self.lblProtocol.grid(sticky="W", row=1, column=1)
+        self.lblProtocol.grid(sticky="W", row=2, column=1)
 
         self.frmParameters = ttk.Frame(self.frmApp, relief=SUNKEN)
-        self.frmParameters.grid(row=2, column=0, columnspan=6, rowspan=10)
+        self.frmParameters.grid(row=3, column=0, columnspan=6, rowspan=10)
 
 
         self.paramControl(self.ID_ENGINERPM,            "Engine RPM",             self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             4, 1)
@@ -305,7 +319,7 @@ class Application(ttk.Frame):
         self.btnQuit = ttk.Button(self.frmApp)
         self.btnQuit["text"] = "QUIT"
         self.btnQuit["command"] =  ask_quit
-        self.btnQuit.grid(row=0,column=5, sticky=N+S+E+W)
+        self.btnQuit.grid(row=1,column=5, sticky=N+S+E+W)
 
         self.btnConnectDevice = ttk.Button(self.frmDeviceConnection)
         self.btnConnectDevice["text"] = "Connect Device"
