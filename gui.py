@@ -62,33 +62,28 @@ class Application(ttk.Frame):
         self.lbl[index] = ttk.Label(self.frmApp)
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
-        #self.lbl[index].configure(background=bgcolour)
 
         # Parameter Decrement Button
         self.btnDec[index] = ttk.Button(self.frmApp)
         self.btnDec[index]["text"] = "-"
         self.btnDec[index]["command"] = callbackDecParameter
         self.btnDec[index].grid(sticky="E", row=row, column=column+2)
-        #self.btnDec[index].configure(highlightbackground=bgcolour)
 
         # Parameter Entry
         self.ent[index] = ttk.Entry(self.frmApp, validate="focusout", validatecommand=callback)
         self.ent[index].grid(sticky="NSWE", row=row, column=column+3, columnspan=2)
-        #self.ent[index].configure(highlightbackground=bgcolour)
         
         # Parameter Increment Button
         self.btnInc[index] = ttk.Button(self.frmApp)
         self.btnInc[index]["text"] = "+"
         self.btnInc[index]["command"] = callbackIncParameter
         self.btnInc[index].grid(sticky="W", row=row, column=column+5)
-        #self.btnInc[index].configure(highlightbackground=bgcolour)
 
         # Parameter Setting Apply Button
         self.btnSet[index] = ttk.Button(self.frmApp)
         self.btnSet[index]["text"] = "Apply"
         self.btnSet[index]["command"] = callback
         self.btnSet[index].grid(sticky="W", row=row, column=column+6)
-        #self.btnSet[index].configure(highlightbackground=bgcolour)
 
 
 
@@ -344,29 +339,13 @@ class Application(ttk.Frame):
     def __init__(self, master=None):
         self.frmApp = ttk.Frame(master)
         self.frmApp.grid(column=0, row=0, columnspan=1, sticky=N+S+E+W)
-        #self.frmApp.grid_columnconfigure(0, weight=1)
-        #self.frmApp.grid_rowconfigure(0, weight=1)
 
         self.device = obd.OBDEmulator()
         #self.frmApp.pack()
         self.createWidgets()
         self.initialiseParams()
 
-        '''
-        ttk.Frame.__init__(self, master)
-        ttk.Frame.grid(self, column=0, row=0, sticky=N+S+E+W)
-        ttk.Frame.grid_columnconfigure(self, 0, weight=1)
-        ttk.Frame.grid_rowconfigure(self, 0, weight=1)
-        '''
-
-        '''
-        self.device = obd.OBDEmulator()
-        self.pack()
-        self.createWidgets()
-        self.initialiseParams()
-        '''
-
-
+        
 
 ############################################################
 # Quit confirmation popup dialog
