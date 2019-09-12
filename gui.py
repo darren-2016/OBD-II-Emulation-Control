@@ -384,7 +384,7 @@ class Application(ttk.Frame):
         self.lblLogHeading["text"] = "Log Output (Logging disabled)"
         self.lblLogHeading.grid(row=0, column=0, sticky=N+S+E+W)
 
-        self.txtLogText = ScrolledText(self.frmLogOutput, height=10, width=100)
+        self.txtLogText = ScrolledText(self.frmLogOutput, height=10, width=120)
         self.txtLogText.grid(row=1, column=0, sticky=N+S+E+W)
 
         #self.writeLogText("Test message\n")
@@ -395,6 +395,7 @@ class Application(ttk.Frame):
     def writeLogText(self, logText):
         if log.readloglevel() == 1:
             self.txtLogText.insert(INSERT, logText)
+            self.txtLogText.see(END)
         
 
     def initialiseWidgets(self):
