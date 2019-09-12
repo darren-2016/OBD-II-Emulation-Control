@@ -4,7 +4,7 @@
 # Module: GUI.py
 #
 
-import tkinter
+import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
@@ -52,8 +52,6 @@ class Application(ttk.Frame):
     INC = 2
     DEC = 3
 
-
-    
     def paramControl(self, index, label, callback, callbackDecParameter, callbackIncParameter, row, column):
         log.output ("Label = " + label)
         self.label = label
@@ -106,6 +104,15 @@ class Application(ttk.Frame):
         self.lblStatus["text"] = "Status: Disconnected"
         self.btnConnectDevice["state"] = "normal"
         self.btnDisconnect["state"] = "disabled"
+
+    def cmdLogging(self):    
+        if self.loggingstate.get() == 1:
+            log.level(1)
+            self.lblLogHeading["text"] = "Log Output (Logging enabled)"
+        else:
+            log.level(0)
+            self.lblLogHeading["text"] = "Log Output (Logging disabled)"
+
 
 
     def cmdIncreaseEngineRPM(self):
@@ -276,6 +283,7 @@ class Application(ttk.Frame):
     # createWidgets
     #
     def createWidgets(self):
+        self.loggingstate = tk.IntVar()
 
         heading1Style = ttk.Style()
         heading1Style.configure("Heading1.TLabel", font = ('Sans', '20', 'bold'), background='royal blue')
@@ -296,17 +304,22 @@ class Application(ttk.Frame):
         self.btnConnectDevice = ttk.Button(self.frmDeviceConnection)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
-        self.btnConnectDevice.grid(row=0, column=1, sticky=N+S+E+W)
+        self.btnConnectDevice.grid(row=1, column=1, sticky=N+S+E+W)
 
         self.btnDisconnect = ttk.Button(self.frmDeviceConnection)
         self.btnDisconnect["text"] = "Disconnect Device"
         self.btnDisconnect["command"] =  self.closeDevice
-        self.btnDisconnect.grid(row=0, column=2, sticky=N+S+E+W)
+        self.btnDisconnect.grid(row=1, column=2, sticky=N+S+E+W)
 
         self.lblStatus = ttk.Label(self.frmDeviceConnection)
         self.lblStatus["text"] = "Status: Disconnected"
-        self.lblStatus.grid(sticky="W", row=0, column=4)
+        self.lblStatus.grid(sticky="W", row=1, column=3)
 
+
+        self.chkLogging = ttk.Checkbutton(self.frmApp, variable=self.loggingstate)
+        self.chkLogging["text"] = "Logging"
+        self.chkLogging["command"] = self.cmdLogging
+        self.chkLogging.grid(row=1, column=4, sticky=N+S+E+W)
 
         self.btnQuit = ttk.Button(self.frmApp)
         self.btnQuit["text"] = "QUIT"
@@ -368,13 +381,13 @@ class Application(ttk.Frame):
         self.frmLogOutput.grid(row=13, column=0, rowspan=2, columnspan=6, sticky=N+S+E+W)
 
         self.lblLogHeading = ttk.Label(self.frmLogOutput)
-        self.lblLogHeading["text"] = "Log Output"
+        self.lblLogHeading["text"] = "Log Output (Logging disabled)"
         self.lblLogHeading.grid(row=0, column=0, sticky=N+S+E+W)
 
         self.txtLogText = ScrolledText(self.frmLogOutput, height=10, width=100)
         self.txtLogText.grid(row=1, column=0, sticky=N+S+E+W)
 
-        self.writeLogText("Test message\n")
+        #self.writeLogText("Test message\n")
         #self.txtLogText.insert(INSERT, "Test message")
         #self.txtLogText.insert(INSERT, "\n")
         #self.txtLogText.insert(INSERT, "Test message2")
