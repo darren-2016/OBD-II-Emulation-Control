@@ -84,7 +84,7 @@ class Application(ttk.Frame):
         self.btnSet[index] = ttk.Button(self.frmParameters)
         self.btnSet[index]["text"] = "Apply"
         self.btnSet[index]["command"] = callback
-        self.btnSet[index].grid(sticky="W", row=row, column=column+6)
+        self.btnSet[index].grid(row=row, column=column+6, sticky=N+S+E+W)
 
 
 
@@ -293,38 +293,6 @@ class Application(ttk.Frame):
         self.frmDeviceConnection = ttk.Frame(self.frmApp, relief=SUNKEN)
         self.frmDeviceConnection.grid(row=1, column=0, columnspan=4, sticky=N+S+E+W)
 
-        self.lblProtocol = ttk.Label(self.frmApp)
-        self.lblProtocol["text"] = "Protocol: ----"
-        self.lblProtocol.grid(sticky="W", row=2, column=1)
-
-        self.frmParameters = ttk.Frame(self.frmApp, relief=SUNKEN)
-        self.frmParameters.grid(row=3, column=0, columnspan=6, rowspan=10)
-
-
-        self.paramControl(self.ID_ENGINERPM,            "Engine RPM",             self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             4, 1)
-        self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,          5, 1)        
-        self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,      6, 1)
-        self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseFuelLevelInput,       self.cmdIncreaseFuelLevelInput,        7, 1)
-        self.paramControl(self.ID_ENGINEFUELRATE,       "Engine Fuel Rate",       self.cmdSetEngineFuelRate,       self.cmdDecreaseEngineFuelRate,       self.cmdIncreaseEngineFuelRate,        8, 1)
-        self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        9, 1)
-        self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad, 10, 1)
-        
-        self.lblVIN = ttk.Label(self.frmParameters)
-        self.lblVIN["text"] = "VIN"
-        self.lblVIN.grid(sticky="W", row=3, column=1)
-
-        self.entVIN = ttk.Entry(self.frmParameters) #, validate="focusout", validatecommand=cmdVIN)
-        self.entVIN.grid(sticky="NSWE", row=3, column=2, columnspan=4)
-
-        self.btnVIN = ttk.Button(self.frmParameters)
-        self.btnVIN["text"] = "Apply"
-        self.btnVIN.grid(row=3,column=7)
-
-        self.btnQuit = ttk.Button(self.frmApp)
-        self.btnQuit["text"] = "QUIT"
-        self.btnQuit["command"] =  ask_quit
-        self.btnQuit.grid(row=1,column=5, sticky=N+S+E+W)
-
         self.btnConnectDevice = ttk.Button(self.frmDeviceConnection)
         self.btnConnectDevice["text"] = "Connect Device"
         self.btnConnectDevice["command"] = self.connectDevice
@@ -339,30 +307,62 @@ class Application(ttk.Frame):
         self.lblStatus["text"] = "Status: Disconnected"
         self.lblStatus.grid(sticky="W", row=0, column=4)
 
+
+        self.btnQuit = ttk.Button(self.frmApp)
+        self.btnQuit["text"] = "QUIT"
+        self.btnQuit["command"] =  ask_quit
+        self.btnQuit.grid(row=1, column=5, sticky=N+S+E+W)
+
+        self.lblProtocol = ttk.Label(self.frmApp)
+        self.lblProtocol["text"] = "Protocol: ----"
+        self.lblProtocol.grid(sticky="W", row=2, column=1)
+
+        self.frmParameters = ttk.Frame(self.frmApp, relief=SUNKEN)
+        self.frmParameters.grid(row=3, column=0, columnspan=6, rowspan=10)
+
+        self.paramControl(self.ID_ENGINERPM,            "Engine RPM",             self.cmdSetEngineRPM,            self.cmdDecreaseEngineRPM,            self.cmdIncreaseEngineRPM,             1, 1)
+        self.paramControl(self.ID_VEHICLESPEED,         "Vehicle Speed",          self.cmdSetVehicleSpeed,         self.cmdDecreaseVehicleSpeed,         self.cmdIncreaseVehicleSpeed,          2, 1)        
+        self.paramControl(self.ID_THROTTLEPOSITION,     "Throttle",               self.cmdSetThrottlePosition,     self.cmdDecreaseThrottlePosition,     self.cmdIncreaseThrottlePosition,      3, 1)
+        self.paramControl(self.ID_FUELLEVELINPUT,       "Fuel Level Input",       self.cmdSetFuelLevelInput,       self.cmdDecreaseFuelLevelInput,       self.cmdIncreaseFuelLevelInput,        4, 1)
+        self.paramControl(self.ID_ENGINEFUELRATE,       "Engine Fuel Rate",       self.cmdSetEngineFuelRate,       self.cmdDecreaseEngineFuelRate,       self.cmdIncreaseEngineFuelRate,        5, 1)
+        self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        6, 1)
+        self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad,  7, 1)
+        
+        self.lblVIN = ttk.Label(self.frmParameters)
+        self.lblVIN["text"] = "VIN"
+        self.lblVIN.grid(sticky="W", row=0, column=1)
+
+        self.entVIN = ttk.Entry(self.frmParameters) #, validate="focusout", validatecommand=cmdVIN)
+        self.entVIN.grid(sticky="NSWE", row=0, column=2, columnspan=4)
+
+        self.btnVIN = ttk.Button(self.frmParameters)
+        self.btnVIN["text"] = "Apply"
+        self.btnVIN.grid(row=0,column=7)
+
         self.lblPID = ttk.Label(self.frmParameters)
         self.lblPID["text"] = "PID"
-        self.lblPID.grid(sticky="W", row=11, column=1)
+        self.lblPID.grid(sticky="W", row=8, column=1)
 
         self.entPID = ttk.Entry(self.frmParameters)
-        self.entPID.grid(sticky="NSWE", row=11, column=2)
+        self.entPID.grid(sticky="NSWE", row=8, column=2)
 
         self.btnPIDValueDec = ttk.Button(self.frmParameters, style="Bold1.TButton")
         self.btnPIDValueDec["text"] = "-"
         self.btnPIDValueDec["command"] = self.cmdDecByPID
-        self.btnPIDValueDec.grid(sticky="E", row=11,column=3)
+        self.btnPIDValueDec.grid(sticky="E", row=8,column=3)
 
         self.entPIDValue = ttk.Entry(self.frmParameters)
-        self.entPIDValue.grid(sticky="NSWE", row=11, column=4, columnspan=2)
+        self.entPIDValue.grid(sticky="NSWE", row=8, column=4, columnspan=2)
 
         self.btnPIDValueInc = ttk.Button(self.frmParameters, style="Bold1.TButton")
         self.btnPIDValueInc["text"] = "+"
         self.btnPIDValueInc["command"] = self.cmdIncByPID
-        self.btnPIDValueInc.grid(sticky="W", row=11,column=6)
+        self.btnPIDValueInc.grid(sticky="W", row=8, column=6)
 
         self.btnPIDValueApply = ttk.Button(self.frmParameters)
         self.btnPIDValueApply["text"] = "Apply"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
-        self.btnPIDValueApply.grid(row=11,column=7)
+        self.btnPIDValueApply.grid(row=8, column=7, sticky=N+S+E+W)
         
 
     def initialiseWidgets(self):
