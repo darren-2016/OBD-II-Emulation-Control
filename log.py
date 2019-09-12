@@ -1,3 +1,9 @@
+############################################################
+# OBD-II Emulator Control Application
+# 
+# Module: log.py
+#
+
 global LOGLEVEL
 
 LOGLEVEL = 0

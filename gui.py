@@ -271,6 +271,9 @@ class Application(ttk.Frame):
         log.output ("Callback!")
 
     
+    ############################################################
+    # createWidgets
+    #
     def createWidgets(self):
 
         heading1Style = ttk.Style()
@@ -410,6 +413,25 @@ def popup_about():
     b = ttk.Button(frmAbout, text="OK", command=win.destroy)
     b.grid(row=2, column=0, columnspan=1, sticky=N+S+E+W)
 
+############################################################
+# Help popup dialog
+#
+def popup_help():
+    win = Toplevel()
+    win.wm_title("Help...")
+    win.columnconfigure(0, weight=1)
+    win.rowconfigure(0, weight=1)
+
+    frmHelp = ttk.Frame(win)
+    frmHelp.grid(row=0, column=0, columnspan=1, sticky=N+S+E+W)
+    frmHelp.grid_columnconfigure(0, weight=1)
+    frmHelp.grid_rowconfigure(0, weight=1)
+
+    l = ttk.Label(frmHelp, text="To be implemented...", anchor=CENTER)
+    l.grid(row=1, column=0, columnspan=1, sticky=N+S+E+W)
+
+    b = ttk.Button(frmHelp, text="OK", command=win.destroy)
+    b.grid(row=2, column=0, columnspan=1, sticky=N+S+E+W)
 
 
 ############################################################
@@ -446,6 +468,7 @@ def main(argv):
     menubar = Menu(root)
     filemenu = Menu(menubar, tearoff=0)
     #self.menubar.add_command(label="Hello!", command=hello)
+    filemenu.add_command(label="Help", command=popup_help)
     filemenu.add_command(label="About", command=popup_about)
     filemenu.add_command(label="Quit!", command=ask_quit)
     menubar.add_cascade(label="File", menu=filemenu)

@@ -1,7 +1,9 @@
 ################################################################################
-# OBD-II Emulator Controller
+# OBD-II Emulator Control Application
+#
 # Python-based controller application for the Freematics OBD-II Emulator
 #
+# Module: obd.py
 
 import serial
 import serial.tools.list_ports
