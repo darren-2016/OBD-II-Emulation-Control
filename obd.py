@@ -21,7 +21,7 @@ class OBDEmulator:
 
   ########################################
   # scanSerialPorts
-  def scanSerialPorts(self):
+  def scanSerialPorts(self, guiObject):
     log.output ("Scanning serial ports")
     portlist = serial.tools.list_ports
     
@@ -48,27 +48,31 @@ class OBDEmulator:
 
   ########################################
   # connectDevice
-  def connectDevice(self):
-    i, portPath = self.scanSerialPorts()
+  def connectDevice(self, guiObject):
+    i, portPath = self.scanSerialPorts(guiObject)
     #i = True
     #portPath = '/dev/tty.SLAB_USBtoUART'
     if i == True:
       log.output ("Connecting")
+      guiObject.writeLogText("Connecting\n")
       self.serialPort = serial.Serial(portPath, baudrate=self.baudRate, timeout=1)
       log.output ("Connected to: " + self.serialPort.name)
 
   ########################################
   # closeConnection
-  def closeConnection(self):
+  def closeConnection(self, guiObject):
     log.output ("Disconnecting")
+    guiObject.writeLogText("Disconnecting\n")
     self.serialPort.close()
 
   ########################################
   # sendCommand
-  def sendCommand(self, command):
+  def sendCommand(self, guiObject, command):
     self.serialPort.write((command.encode() + b'\r'))
+    guiObject.writeLogText('>>' + command + '\r')
     out = self.serialPort.readline()
     log.output ('<<' + out.decode())
+    guiObject.writeLogText(out.decode())
     #out = self.serialPort.readline()
     #log.output ('<<' + out)
     #out = self.serialPort.readline()
@@ -84,8 +88,8 @@ class OBDEmulator:
   # Function:    setPidValue
   # Parameters:  pid (string), pidValue (integer)
   # Description: Set PID Value
-  def setPIDValue(self, pid, pidValue):
-    self.sendCommand("ATSET " + pid + "=" + str(pidValue))
+  def setPIDValue(self, guiObject, pid, pidValue):
+    self.sendCommand(guiObject, "ATSET " + pid + "=" + str(pidValue))
     log.output ("PID = " + pid)
     log.output ("PID Value = " + str(pidValue))
 
@@ -94,39 +98,39 @@ class OBDEmulator:
   # Function:    setEngineRPM
   # Parameters:  rpm (rpm)
   # Description: PID=010C
-  def setEngineRPM(self, rpm):
-      self.sendCommand("ATSET 010C=" + str(rpm))
+  def setEngineRPM(self, guiObject, rpm):
+      self.sendCommand(guiObject, "ATSET 010C=" + str(rpm))
 
   ########################################
   # Function:    setVehicleSpeed
   # Parameters:  speed (km/h)
   # Description: PID=010D
-  def setVehicleSpeed(self, speed):
-    self.sendCommand("ATSET 010D=" + str(speed))
+  def setVehicleSpeed(self, guiObject, speed):
+    self.sendCommand(guiObject, "ATSET 010D=" + str(speed))
 
   ########################################
   # Function:    setThrottlePosition
   # Parameters:  throttle (0 - 100%)
   # Description: PID=0111
-  def setThrottlePosition(self, throttle):
-    self.sendCommand("ATSET 0111=" + str(throttle))
+  def setThrottlePosition(self, guiObject, throttle):
+    self.sendCommand(guiObject, "ATSET 0111=" + str(throttle))
   
   ########################################
   # Function:    setFuelLevelInput
   # Parameters:  fuelLevel (0 - 100%)
   # Description: PID=012F
-  def setFuelLevelInput(self, fuelLevel):
-    self.sendCommand("ATSET 012F=" + str(fuelLevel))
+  def setFuelLevelInput(self, guiObject, fuelLevel):
+    self.sendCommand(guiObject, "ATSET 012F=" + str(fuelLevel))
   
   ########################################
   # Function:    setEngineFuelRate
   # Parameters:  rate (L/h)
   # Description: PID=015E
-  def setEngineFuelRate(self, rate):
-    self.sendCommand("ATSET 015E=" + str(rate))
+  def setEngineFuelRate(self, guiObject, rate):
+    self.sendCommand(guiObject, "ATSET 015E=" + str(rate))
   
-  def getEngineFuelRate(self):
-    self.sendCommand("ATGET 015E")
+  def getEngineFuelRate(self, guiObject):
+    self.sendCommand(guiObject, "ATGET 015E")
     out = self.serialPort.readline()
     log.output ("<<<<< " + str(out))
     out = self.serialPort.readline()
@@ -150,15 +154,15 @@ class OBDEmulator:
   # Function:    setMAFAirFlowRate
   # Parameters:  rate (g/s)
   # Description: PID=0110
-  def setMAFAirFlowRate(self, rate):
-    self.sendCommand("ATSET 0110=" + str(rate))
+  def setMAFAirFlowRate(self, guiObject, rate):
+    self.sendCommand(guiObject, "ATSET 0110=" + str(rate))
 
   ########################################
   # Function:    setCalculatedEngineLoad
   # Parameters:  rate (%)
   # Description: PID=0104
-  def setCalculatedEngineLoad(self, load):
-    self.sendCommand("ATSET 0104=" + str(load))
+  def setCalculatedEngineLoad(self, guiObject, load):
+    self.sendCommand(guiObject, "ATSET 0104=" + str(load))
 
 
 ########################################
@@ -173,9 +177,9 @@ def main():
 
   #obd.sendCmd("ATZ")
 
-  obd.sendCommand("ATVIN0")
+  #obd.sendCommand("ATVIN0")
 
-  obd.setEngineRPM(1600)
+  #obd.setEngineRPM(1600)
   #obd.setVehicleSpeed(50)
   #obd.setThrottlePosition(19)
   #obd.setFuelLevelInput(66)

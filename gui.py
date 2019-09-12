@@ -8,6 +8,7 @@ import tkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+from tkinter.scrolledtext import ScrolledText
 import obd
 import log
 
@@ -15,7 +16,7 @@ import log
 
 
 
-log.output("GUI")
+#log.output("GUI")
 
 bgcolour = 'lightblue'
 title = 'OBD-II Emulator Control'
@@ -95,13 +96,13 @@ class Application(ttk.Frame):
 
 
     def connectDevice(self):
-        self.device.connectDevice()
+        self.device.connectDevice(self)
         self.lblStatus["text"] = "Status: Connected"
         self.btnConnectDevice["state"] = "disabled"
         self.btnDisconnect["state"] = "normal"
     
     def closeDevice(self):
-        self.device.closeConnection()
+        self.device.closeConnection(self)
         self.lblStatus["text"] = "Status: Disconnected"
         self.btnConnectDevice["state"] = "normal"
         self.btnDisconnect["state"] = "disabled"
@@ -116,15 +117,15 @@ class Application(ttk.Frame):
     def cmdSetEngineRPM(self, mode=SET):
         rpm = int(self.ent[self.ID_ENGINERPM].get(), base=10)
         if mode == self.SET:
-            self.device.setEngineRPM(rpm)
+            self.device.setEngineRPM(self, rpm)
         if mode == self.INC:
             rpm = rpm + 1
-            self.device.setEngineRPM(rpm)
+            self.device.setEngineRPM(self, rpm)
             self.ent[self.ID_ENGINERPM].delete(0, END)
             self.ent[self.ID_ENGINERPM].insert(0, rpm)
         if mode == self.DEC:
             rpm = rpm - 1
-            self.device.setEngineRPM(rpm)
+            self.device.setEngineRPM(self, rpm)
             self.ent[self.ID_ENGINERPM].delete(0, END)
             self.ent[self.ID_ENGINERPM].insert(0, rpm)
 
@@ -144,7 +145,7 @@ class Application(ttk.Frame):
             speed = speed - 1
             self.ent[self.ID_VEHICLESPEED].delete(0, END)
             self.ent[self.ID_VEHICLESPEED].insert(0, speed)
-        self.device.setVehicleSpeed(speed)
+        self.device.setVehicleSpeed(self, speed)
 
     def cmdIncreaseThrottlePosition(self):
         self.cmdSetThrottlePosition(self.INC)
@@ -162,7 +163,7 @@ class Application(ttk.Frame):
             throttle = throttle - 1
             self.ent[self.ID_THROTTLEPOSITION].delete(0, END)
             self.ent[self.ID_THROTTLEPOSITION].insert(0, throttle)
-        self.device.setThrottlePosition(throttle)
+        self.device.setThrottlePosition(self, throttle)
     
     def cmdIncreaseFuelLevelInput(self):
         self.cmdSetFuelLevelInput(self.INC)
@@ -180,7 +181,7 @@ class Application(ttk.Frame):
             level = level - 1
             self.ent[self.ID_FUELLEVELINPUT].delete(0, END)
             self.ent[self.ID_FUELLEVELINPUT].insert(0, level)
-        self.device.setFuelLevelInput(level)
+        self.device.setFuelLevelInput(self, level)
     
     def cmdIncreaseEngineFuelRate(self):
         self.cmdSetEngineFuelRate(self.INC)
@@ -198,7 +199,7 @@ class Application(ttk.Frame):
             rate = rate - 1
             self.ent[self.ID_ENGINEFUELRATE].delete(0, END)
             self.ent[self.ID_ENGINEFUELRATE].insert(0, rate)
-        self.device.setEngineFuelRate(rate)
+        self.device.setEngineFuelRate(self, rate)
 
     def cmdIncreaseMAFAirFlowRate(self):
         self.cmdSetMAFAirFlowRate(self.INC)
@@ -216,7 +217,7 @@ class Application(ttk.Frame):
             rate = rate - 1
             self.ent[self.ID_MAFAIRFLOWRATE].delete(0, END)
             self.ent[self.ID_MAFAIRFLOWRATE].insert(0, rate)
-        self.device.setMAFAirFlowRate(rate)
+        self.device.setMAFAirFlowRate(self, rate)
     
     def cmdIncreaseCalculatedEngineLoad(self):
         self.cmdSetCalculatedEngineLoad(self.INC)
@@ -234,7 +235,7 @@ class Application(ttk.Frame):
             load = load - 1
             self.ent[self.ID_CALCULATEDENGINELOAD].delete(0, END)
             self.ent[self.ID_CALCULATEDENGINELOAD].insert(0, load)
-        self.device.setCalculatedEngineLoad(load)
+        self.device.setCalculatedEngineLoad(self, load)
 
     def cmdIncByPID(self):
         self.cmdSetByPID(self.INC)
@@ -254,7 +255,7 @@ class Application(ttk.Frame):
             self.entPIDValue.delete(0, END)
             self.entPIDValue.insert(0, pidValue)
 
-        self.device.setPIDValue(pid, pidValue)
+        self.device.setPIDValue(self, pid, pidValue)
     
         ###pid = self.entPID.get()
         ###pidValue = self.entPIDValue.get()
@@ -288,7 +289,6 @@ class Application(ttk.Frame):
         self.lblHeading = ttk.Label(self.frmHeading, style="Heading1.TLabel")
         self.lblHeading["text"] = "OBD-II Emulator Control"
         self.lblHeading.grid(row=0, column=0, sticky=N+S+E+W)
-
 
         self.frmDeviceConnection = ttk.Frame(self.frmApp, relief=SUNKEN)
         self.frmDeviceConnection.grid(row=1, column=0, columnspan=4, sticky=N+S+E+W)
@@ -363,6 +363,25 @@ class Application(ttk.Frame):
         self.btnPIDValueApply["text"] = "Apply"
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=8, column=7, sticky=N+S+E+W)
+
+        self.frmLogOutput = ttk.Frame(self.frmApp, style="Blue.TFrame")
+        self.frmLogOutput.grid(row=13, column=0, rowspan=2, columnspan=6, sticky=N+S+E+W)
+
+        self.lblLogHeading = ttk.Label(self.frmLogOutput)
+        self.lblLogHeading["text"] = "Log Output"
+        self.lblLogHeading.grid(row=0, column=0, sticky=N+S+E+W)
+
+        self.txtLogText = ScrolledText(self.frmLogOutput, height=10, width=100)
+        self.txtLogText.grid(row=1, column=0, sticky=N+S+E+W)
+
+        self.writeLogText("Test message\n")
+        #self.txtLogText.insert(INSERT, "Test message")
+        #self.txtLogText.insert(INSERT, "\n")
+        #self.txtLogText.insert(INSERT, "Test message2")
+
+    def writeLogText(self, logText):
+        if log.readloglevel() == 1:
+            self.txtLogText.insert(INSERT, logText)
         
 
     def initialiseWidgets(self):
@@ -433,6 +452,12 @@ def popup_help():
     b = ttk.Button(frmHelp, text="OK", command=win.destroy)
     b.grid(row=2, column=0, columnspan=1, sticky=N+S+E+W)
 
+#global app
+
+def writeLog(app):
+    print()
+    #app.writeLogText("Test123")
+    
 
 ############################################################
 # Main program
@@ -480,6 +505,8 @@ def main(argv):
 
     root.protocol("WM_DELETE_WINDOW", ask_quit)
     app = Application(master=root)
+
+    #writeLog(app)
 
 
     root.mainloop()

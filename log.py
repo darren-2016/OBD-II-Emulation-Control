@@ -20,3 +20,8 @@ def level(loglevel):
         LOGLEVEL = 1
     else:
         LOGLEVEL = 0
+
+def readloglevel():
+    global LOGLEVEL
+    return LOGLEVEL
+
