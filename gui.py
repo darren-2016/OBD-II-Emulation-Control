@@ -95,9 +95,9 @@ class Application(ttk.Frame):
 
 
     def connectDevice(self):
-        connectedStatus = self.device.connectDevice(self)
+        connectedStatus, portPath = self.device.connectDevice(self)
         if connectedStatus == True:
-            self.lblStatus["text"] = "Status: Connected"
+            self.lblStatus["text"] = "Status: Connected [" + portPath + "]"
             self.lblStatus.configure(style="Green.TLabel")
             self.btnConnectDevice["state"] = "disabled"
             self.btnDisconnect["state"] = "normal"

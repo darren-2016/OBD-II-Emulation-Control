@@ -60,9 +60,9 @@ class OBDEmulator:
       guiObject.writeLogText("Connecting\n")
       self.serialPort = serial.Serial(portPath, baudrate=self.baudRate, timeout=1)
       log.output ("Connected to: " + self.serialPort.name)
-      return True
+      return True, self.serialPort.name
     else:
-      return False
+      return False, ""
 
     
 
