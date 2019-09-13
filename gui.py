@@ -52,6 +52,7 @@ class Application(ttk.Frame):
     INC = 2
     DEC = 3
 
+
     def paramControl(self, index, label, callback, callbackDecParameter, callbackIncParameter, row, column):
         log.output ("Label = " + label)
         self.label = label
@@ -96,12 +97,14 @@ class Application(ttk.Frame):
     def connectDevice(self):
         self.device.connectDevice(self)
         self.lblStatus["text"] = "Status: Connected"
+        self.lblStatus.configure(style="Green.TLabel")
         self.btnConnectDevice["state"] = "disabled"
         self.btnDisconnect["state"] = "normal"
     
     def closeDevice(self):
         self.device.closeConnection(self)
         self.lblStatus["text"] = "Status: Disconnected"
+        self.lblStatus.configure(style="Red.TLabel")
         self.btnConnectDevice["state"] = "normal"
         self.btnDisconnect["state"] = "disabled"
 
@@ -285,6 +288,13 @@ class Application(ttk.Frame):
     def createWidgets(self):
         self.loggingstate = tk.IntVar()
 
+        labelGreenStyle = ttk.Style()
+        labelGreenStyle.configure("Green.TLabel", foreground='forest green')
+
+        labelRedStyle = ttk.Style()
+        labelRedStyle.configure("Red.TLabel", foreground='red')
+
+
         heading1Style = ttk.Style()
         heading1Style.configure("Heading1.TLabel", font = ('Sans', '20', 'bold'), background='royal blue')
         
@@ -312,6 +322,7 @@ class Application(ttk.Frame):
         self.btnDisconnect.grid(row=1, column=2, sticky=N+S+E+W)
 
         self.lblStatus = ttk.Label(self.frmDeviceConnection)
+        self.lblStatus.configure(style="Red.TLabel")
         self.lblStatus["text"] = "Status: Disconnected"
         self.lblStatus.grid(sticky="W", row=1, column=3)
 
