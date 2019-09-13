@@ -58,9 +58,8 @@ class Application(ttk.Frame):
         self.label = label
         self.callback = callback
         
-
         # Parameter Label
-        self.lbl[index] = ttk.Label(self.frmParameters)
+        self.lbl[index] = ttk.Label(self.frmParameters, style="Bold.TLabel")
         self.lbl[index]["text"] = self.label
         self.lbl[index].grid(sticky="W", row=row, column=column)
 
@@ -289,6 +288,9 @@ class Application(ttk.Frame):
     def createWidgets(self):
         self.loggingstate = tk.IntVar()
 
+        boldText = ttk.Style()
+        boldText.configure("Bold.TLabel", font = ('Sans', '12', 'bold'))
+
         labelGreenStyle = ttk.Style()
         labelGreenStyle.configure("Green.TLabel", foreground='forest green')
 
@@ -353,7 +355,7 @@ class Application(ttk.Frame):
         self.paramControl(self.ID_MAFAIRFLOWRATE,       "MAF Air Flow Rate",      self.cmdSetMAFAirFlowRate,       self.cmdDecreaseMAFAirFlowRate,       self.cmdIncreaseMAFAirFlowRate,        6, 1)
         self.paramControl(self.ID_CALCULATEDENGINELOAD, "Calculated Engine Load", self.cmdSetCalculatedEngineLoad, self.cmdDecreaseCalculatedEngineLoad, self.cmdIncreaseCalculatedEngineLoad,  7, 1)
         
-        self.lblVIN = ttk.Label(self.frmParameters)
+        self.lblVIN = ttk.Label(self.frmParameters, style="Bold.TLabel")
         self.lblVIN["text"] = "VIN"
         self.lblVIN.grid(sticky="W", row=0, column=1)
 
@@ -364,7 +366,7 @@ class Application(ttk.Frame):
         self.btnVIN["text"] = "Apply"
         self.btnVIN.grid(row=0,column=7)
 
-        self.lblPID = ttk.Label(self.frmParameters)
+        self.lblPID = ttk.Label(self.frmParameters, style="Bold.TLabel")
         self.lblPID["text"] = "PID"
         self.lblPID.grid(sticky="W", row=8, column=1)
 
