@@ -15,6 +15,7 @@ import log
 class OBDEmulator:
   baudRate = 38400
   portIdString = "10C4:EA60"
+  serialPort = 0
 
   def __init__(self, verbose=True):
     self.verbose = verbose
@@ -68,19 +69,39 @@ class OBDEmulator:
 
   ########################################
   # closeConnection
+  #
   def closeConnection(self, guiObject):
     log.output ("Disconnecting")
     guiObject.writeLogText("Disconnecting\n")
     self.serialPort.close()
+    self.serialPort = 0
 
+  ########################################
+  # writeSerialPort
+  #
+  def writeSerialPort(self, command):
+    if self.serialPort:
+      self.serialPort.write(command)
+
+  ########################################
+  # readlineSerialPort
+  #
+  def readlineSerialPort(self):
+    if self.serialPort:
+      return self.serialPort.readline()  
+    else:
+      return b""
+
+  
   ########################################
   # sendCommand
   def sendCommand(self, guiObject, command):
-    self.serialPort.write((command.encode() + b'\r'))
+    self.writeSerialPort(command.encode() + b'\r')
     guiObject.writeLogText('>>' + command + '\r')
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ('<<' + out.decode())
     guiObject.writeLogText(out.decode())
+
     #out = self.serialPort.readline()
     #log.output ('<<' + out)
     #out = self.serialPort.readline()
@@ -137,25 +158,28 @@ class OBDEmulator:
   def setEngineFuelRate(self, guiObject, rate):
     self.sendCommand(guiObject, "ATSET 015E=" + str(rate))
   
+  ########################################
+  # Function:    getEngineFuelRate
+  #
   def getEngineFuelRate(self, guiObject):
     self.sendCommand(guiObject, "ATGET 015E")
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
-    out = self.serialPort.readline()
+    out = self.readlineSerialPort()
     log.output ("<<<<< " + str(out))
     
   ########################################
