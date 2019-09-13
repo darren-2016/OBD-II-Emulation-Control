@@ -26,11 +26,12 @@ class OBDEmulator:
     portlist = serial.tools.list_ports
     
     iterator = serial.tools.list_ports.grep(self.portIdString)
-
+    
     #for i in portlist:
     #  log.output (i.ListPortInfo)
     
     devicesFound = 0
+    
     for c, (port, desc, hwid) in enumerate(iterator):
       devicesFound = devicesFound + 1
       portPath = format(port)
@@ -39,12 +40,13 @@ class OBDEmulator:
     portPath = format(port)
     devicesFound = 1
     '''
+    
     if devicesFound == 1:
       log.output("Found OBD-II device {}".format(portPath))
       return True, portPath
     else:
       log.output("{} OBD-II devices found".format(devicesFound))
-      return False
+      return False, ""
 
   ########################################
   # connectDevice
@@ -52,11 +54,17 @@ class OBDEmulator:
     i, portPath = self.scanSerialPorts(guiObject)
     #i = True
     #portPath = '/dev/tty.SLAB_USBtoUART'
+    
     if i == True:
       log.output ("Connecting")
       guiObject.writeLogText("Connecting\n")
       self.serialPort = serial.Serial(portPath, baudrate=self.baudRate, timeout=1)
       log.output ("Connected to: " + self.serialPort.name)
+      return True
+    else:
+      return False
+
+    
 
   ########################################
   # closeConnection

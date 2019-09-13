@@ -95,11 +95,12 @@ class Application(ttk.Frame):
 
 
     def connectDevice(self):
-        self.device.connectDevice(self)
-        self.lblStatus["text"] = "Status: Connected"
-        self.lblStatus.configure(style="Green.TLabel")
-        self.btnConnectDevice["state"] = "disabled"
-        self.btnDisconnect["state"] = "normal"
+        connectedStatus = self.device.connectDevice(self)
+        if connectedStatus == True:
+            self.lblStatus["text"] = "Status: Connected"
+            self.lblStatus.configure(style="Green.TLabel")
+            self.btnConnectDevice["state"] = "disabled"
+            self.btnDisconnect["state"] = "normal"
     
     def closeDevice(self):
         self.device.closeConnection(self)
