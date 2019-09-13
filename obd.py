@@ -58,8 +58,9 @@ class OBDEmulator:
     
     if i == True:
       log.output ("Connecting")
-      guiObject.writeLogText("Connecting\n")
+      guiObject.writeLogText("Connecting...\n")
       self.serialPort = serial.Serial(portPath, baudrate=self.baudRate, timeout=1)
+      guiObject.writeLogText("Connected to " + self.serialPort.name + "\n")
       log.output ("Connected to: " + self.serialPort.name)
       return True, self.serialPort.name
     else:
@@ -72,7 +73,7 @@ class OBDEmulator:
   #
   def closeConnection(self, guiObject):
     log.output ("Disconnecting")
-    guiObject.writeLogText("Disconnecting\n")
+    guiObject.writeLogText("Disconnecting from " + self.serialPort.name + "\n")
     self.serialPort.close()
     self.serialPort = 0
 
