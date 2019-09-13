@@ -389,7 +389,7 @@ class Application(ttk.Frame):
         self.btnPIDValueApply["command"] = self.cmdSetByPID
         self.btnPIDValueApply.grid(row=8, column=7, sticky=N+S+E+W)
 
-        self.frmLogOutput = ttk.Frame(self.frmApp, style="Blue.TFrame")
+        self.frmLogOutput = ttk.Frame(self.frmApp)
         self.frmLogOutput.grid(row=13, column=0, rowspan=2, columnspan=6, sticky=N+S+E+W)
 
         self.lblLogHeading = ttk.Label(self.frmLogOutput)
